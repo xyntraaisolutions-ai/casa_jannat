@@ -62,8 +62,16 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
         <p>{locale === "es" ? "Reserva directa · precios en USD" : "Direct booking · prices in USD"}</p>
       </div>
       <div className="flex h-16 items-center justify-between gap-4 px-5 md:h-[4.25rem] md:px-8">
-        <Link href={localizeHref(locale, "/")} aria-label="Jaco Escape" className="min-w-0 shrink">
-          <JacoLogo locale={locale} light={!solid} />
+        <Link
+          href={localizeHref(locale, "/")}
+          aria-label="Jaco Escape"
+          className={`min-w-0 shrink ${
+            solid
+              ? ""
+              : "rounded-2xl bg-sand px-2.5 py-1.5 text-ocean shadow-[0_12px_28px_-14px_rgb(8_38_44/0.85)] ring-1 ring-white/80 md:px-3 md:py-2"
+          }`}
+        >
+          <JacoLogo locale={locale} light={false} />
         </Link>
         <nav className="hidden items-center gap-7 lg:flex" aria-label={locale === "es" ? "Principal" : "Primary"}>
           {links.map((link) => {

@@ -18,6 +18,16 @@ export const homeHero = {
   ),
 };
 
+export const jacoView = {
+  src: "/images/casa-jannat/jaco-hills.jpg",
+  width: 2560,
+  height: 1440,
+  alt: c(
+    "Jacó beach and the Pacific, seen from the green hills above town",
+    "La playa de Jacó y el Pacífico, vistos desde los cerros verdes sobre el pueblo",
+  ),
+};
+
 export const photos: Photo[] = [
   {
     src: "/images/casa-jannat/hero-pool.jpg",

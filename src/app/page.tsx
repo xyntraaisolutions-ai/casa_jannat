@@ -1,6 +1,6 @@
 import { HomePage } from "@/components/HomePage";
 import { JsonLd } from "@/components/JsonLd";
-import { homeHero, villa } from "@/content/villa";
+import { homeHero, jacoView, villa } from "@/content/villa";
 import { getLocale } from "@/lib/locale";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -15,10 +15,10 @@ export async function generateMetadata() {
     title: locale === "es" ? "Casa Jannat — Un pedacito de paraíso en Jacó" : "Casa Jannat — A Little Piece of Paradise in Jacó",
     description: site.description[locale],
     image: {
-      url: homeHero.src,
-      width: homeHero.width,
-      height: homeHero.height,
-      alt: locale === "es" ? homeHero.alt.es : homeHero.alt.en,
+      url: jacoView.src,
+      width: jacoView.width,
+      height: jacoView.height,
+      alt: locale === "es" ? jacoView.alt.es : jacoView.alt.en,
     },
   });
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { categoryLabel, experienceFromIsPerPerson, experienceFromPrice, experiences } from "@/content/experiences";
 import { occasions } from "@/content/occasions";
 import { packages, quotePackage } from "@/content/packages";
-import { homeHero, photos, villa } from "@/content/villa";
+import { jacoView, photos, villa } from "@/content/villa";
 import { t, type Locale } from "@/lib/copy";
 import { formatMoney } from "@/lib/dates";
 import { rates } from "@/lib/rates";
@@ -17,37 +17,36 @@ export function HomePage({ locale }: { locale: Locale }) {
   const featured = experiences.filter((item) => item.featured);
   return (
     <>
-      <section className="relative min-h-[100svh] text-sand">
+      <section className="relative h-[70svh] min-h-[520px] text-sand md:h-[calc(100svh-8.5rem)]">
         <Image
-          src={homeHero.src}
-          alt={t(locale, homeHero.alt)}
+          src={jacoView.src}
+          alt={t(locale, jacoView.alt)}
           fill
           priority
           sizes="100vw"
           quality={90}
-          className="object-cover object-[center_58%] md:object-center"
+          className="object-cover object-[center_46%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ocean-deep via-ocean-deep/35 to-ocean-deep/25" />
-        <Container className="relative flex min-h-[100svh] flex-col justify-end pb-36 pt-28 md:pb-10 md:pt-32">
-          <Eyebrow light>{t(locale, villa.tagline)}</Eyebrow>
-          <h1 className="mt-4 max-w-4xl font-display text-5xl leading-[0.95] md:text-7xl">
-            {locale === "es" ? (
-              <>
-                Casa Jannat
-                <span className="mt-2 block text-3xl italic text-sand/90 md:text-5xl">un pedacito de paraíso en Jacó</span>
-              </>
-            ) : (
-              <>
-                Casa Jannat
-                <span className="mt-2 block text-3xl italic text-sand/90 md:text-5xl">a little piece of paradise in Jacó</span>
-              </>
-            )}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ocean-deep/55 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ocean-deep/70 to-transparent md:h-56" />
+        <Container className="relative flex h-full flex-col justify-end pb-8 pt-28 md:pb-14">
+          <Eyebrow light>{locale === "es" ? "Jacó, desde los cerros" : "Jacó, from the hills"}</Eyebrow>
+          <h1 className="mt-3 max-w-4xl font-display text-5xl leading-[0.92] md:text-8xl">
+            Casa Jannat
+            <span className="mt-2 block max-w-2xl font-display text-2xl italic text-sand/90 md:text-4xl">
+              {locale === "es" ? "un pedacito de paraíso" : "a little piece of paradise"}
+            </span>
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-sand/85">
+          <p className="mt-4 max-w-md text-base text-sand/90 md:text-lg">
             {locale === "es"
-              ? "Piscina privada, cuatro recámaras y la playa a unos minutos."
-              : "Private pool, four bedrooms, and the beach just minutes away."}
+              ? "La playa larga queda justo abajo. La casa, con piscina privada, está a unos minutos de la arena."
+              : "The long beach sits just below. The house, with its private pool, is a few minutes from the sand."}
           </p>
+        </Container>
+      </section>
+
+      <section className="relative z-10 md:-mt-6">
+        <Container>
           <HeroSearch locale={locale} />
         </Container>
       </section>
@@ -299,7 +298,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       </section>
 
       <section className="relative min-h-[70vh] text-sand">
-        <Image src={homeHero.src} alt="" fill className="object-cover object-center" sizes="100vw" quality={90} />
+        <Image src={jacoView.src} alt="" fill className="object-cover object-[center_46%]" sizes="100vw" quality={90} />
         <div className="absolute inset-0 bg-ocean-deep/70" />
         <Container className="relative py-24">
           <h2 className="max-w-2xl font-display text-5xl leading-tight md:text-6xl">
