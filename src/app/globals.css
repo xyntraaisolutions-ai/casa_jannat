@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ocean: #0e3b43;
+  --color-ocean-deep: #08262c;
+  --color-coral: #e8735a;
+  --color-coral-deep: #b8432e;
+  --color-jungle: #2f5d50;
+  --color-sand: #f6f1ea;
+  --color-sand-2: #ebe3d6;
+  --color-ink: #1b1b1b;
+  --color-muted: #6b6b6b;
+  --color-gold: #c9a46a;
+  --color-line: #e3d8c8;
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-manrope), "Avenir Next", system-ui, sans-serif;
+  --shadow-card: 0 24px 60px -36px rgb(14 59 67 / 0.45);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-sand);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #0e3b43;
+  color: #f6f1ea;
+}
+
+:focus-visible {
+  outline: 2px solid #0e3b43;
+  outline-offset: 3px;
+}
+
+[id] {
+  scroll-margin-top: 7.5rem;
+}
+
+.arch {
+  border-radius: 12rem 12rem 1.25rem 1.25rem;
+}
+
+.glass {
+  background: rgb(246 241 234 / 0.82);
+  border: 1px solid rgb(255 255 255 / 0.55);
+  box-shadow: 0 20px 50px -28px rgb(8 38 44 / 0.55);
+  backdrop-filter: blur(16px);
+}
+
+dialog {
+  max-width: min(72rem, calc(100vw - 1.5rem));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+dialog::backdrop {
+  background: rgb(8 38 44 / 0.78);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
