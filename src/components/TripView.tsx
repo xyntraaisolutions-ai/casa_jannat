@@ -175,7 +175,7 @@ export function TripView({ locale }: { locale: Locale }) {
           {locale === "es" ? "Vaciar el viaje" : "Clear the trip"}
         </button>
       </div>
-      <aside className="h-fit rounded-3xl bg-ocean p-5 text-sand lg:sticky lg:top-28">
+      <aside className="h-fit rounded-3xl bg-ocean p-5 text-sand lg:sticky lg:top-40">
         <h2 className="font-display text-3xl">{locale === "es" ? "Enviar la solicitud" : "Send the request"}</h2>
         <p className="mt-2 text-sm text-sand/75">
           {locale === "es"

@@ -166,7 +166,7 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
             </>
           ) : null}
         </div>
-        <div className="space-y-4 lg:sticky lg:top-28 lg:self-start">
+        <div className="space-y-4 lg:sticky lg:top-40 lg:self-start">
           <ExperienceBooker locale={locale} experience={experience} />
           <a
             href={hostHref(`${locale === "es" ? "Pregunta sobre" : "Question about"} ${experience.title.en}`, experience.title.en)}

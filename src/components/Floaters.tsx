@@ -46,7 +46,7 @@ export function Floaters({ locale, path }: { locale: Locale; path: string }) {
         {hostAction(locale)}
       </a>
       {consent === "unknown" ? (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ocean px-4 py-3 text-sand shadow-card md:inset-x-auto md:bottom-auto md:right-4 md:top-28 md:max-w-xs md:rounded-2xl md:border-0 md:p-4">
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ocean px-4 py-3 text-sand shadow-card md:inset-x-auto md:bottom-auto md:right-4 md:top-44 md:max-w-xs md:rounded-2xl md:border-0 md:p-4">
           <div className="flex items-center justify-between gap-3 md:block">
           <p className="text-xs leading-snug md:text-sm">
             {locale === "es"

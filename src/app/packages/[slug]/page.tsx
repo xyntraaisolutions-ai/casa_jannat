@@ -96,7 +96,7 @@ export default async function PackagePage({ params }: { params: Promise<{ slug: 
               : "Lodging uses the green-season rate. If your dates fall in high season, the trip recalculates the nights."}
           </p>
         </div>
-        <div className="lg:sticky lg:top-28 lg:self-start">
+        <div className="lg:sticky lg:top-40 lg:self-start">
           <PackageBook locale={locale} pkg={pkg} />
         </div>
       </Container>

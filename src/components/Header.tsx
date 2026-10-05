@@ -57,6 +57,9 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-40 ${solid ? "bg-sand/95 text-ocean shadow-[0_1px_0_rgba(14,59,67,0.08)] backdrop-blur" : "bg-transparent text-sand"}`}>
+      <p className="bg-ocean px-4 py-2 text-center text-[0.72rem] font-semibold tracking-wide text-sand">
+        {locale === "es" ? "Este sitio web está en fase de desarrollo." : "This website is in development."}
+      </p>
       <div className={`hidden items-center justify-between px-8 text-[0.72rem] tracking-wide md:flex ${solid ? "text-muted" : "text-sand/80"} h-8`}>
         <p>Jacó, Puntarenas, Costa Rica</p>
         <p>{locale === "es" ? "Reserva directa · precios en USD" : "Direct booking · prices in USD"}</p>
@@ -179,7 +182,7 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
         </div>
       </div>
       {open ? (
-        <div className="max-h-[calc(100svh-4rem)] overflow-y-auto border-t border-line bg-sand px-5 py-6 text-ocean lg:hidden">
+        <div className="max-h-[calc(100svh-6.5rem)] overflow-y-auto border-t border-line bg-sand px-5 py-6 text-ocean lg:hidden">
           <ul className="space-y-1">
             {links.map((link) => (
               <li key={link.href}>

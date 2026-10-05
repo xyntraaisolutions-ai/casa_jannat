@@ -26,19 +26,19 @@ export function HeroSearch({ locale }: { locale: Locale }) {
   }
 
   return (
-    <div className="glass mt-8 rounded-3xl p-3 text-ink md:p-4">
-      <div className="grid gap-2 md:grid-cols-[1fr_1fr_0.7fr_1fr_auto] md:items-end">
-        <button type="button" onClick={() => setOpen((value) => !value)} className="rounded-2xl px-3 py-2 text-left hover:bg-white/50">
+    <div className="rounded-[1.6rem] bg-white p-2 text-ink shadow-[0_28px_70px_-32px_rgb(8_38_44/0.55)] ring-1 ring-ocean/10 md:p-3">
+      <div className="grid gap-1 md:grid-cols-[1.15fr_1.15fr_0.75fr_1.2fr_auto] md:items-stretch">
+        <button type="button" onClick={() => setOpen((value) => !value)} className="rounded-2xl px-4 py-3 text-left hover:bg-sand">
           <span className="block text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-muted">{locale === "es" ? "Llegada" : "Arrive"}</span>
-          <span className="mt-1 block text-sm">{checkIn ? formatDate(checkIn, locale) : locale === "es" ? "Elegir fecha" : "Add date"}</span>
+          <span className="mt-1 block text-sm font-medium">{checkIn ? formatDate(checkIn, locale) : locale === "es" ? "Elegir fecha" : "Add date"}</span>
         </button>
-        <button type="button" onClick={() => setOpen((value) => !value)} className="rounded-2xl px-3 py-2 text-left hover:bg-white/50">
+        <button type="button" onClick={() => setOpen((value) => !value)} className="rounded-2xl px-4 py-3 text-left hover:bg-sand md:border-l md:border-line">
           <span className="block text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-muted">{locale === "es" ? "Salida" : "Leave"}</span>
-          <span className="mt-1 block text-sm">{checkOut ? formatDate(checkOut, locale) : locale === "es" ? "Elegir fecha" : "Add date"}</span>
+          <span className="mt-1 block text-sm font-medium">{checkOut ? formatDate(checkOut, locale) : locale === "es" ? "Elegir fecha" : "Add date"}</span>
         </button>
-        <label className="rounded-2xl px-3 py-2">
+        <label className="rounded-2xl px-4 py-3 md:border-l md:border-line">
           <span className="block text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-muted">{locale === "es" ? "Huéspedes" : "Guests"}</span>
-          <select value={guests} onChange={(event) => setGuests(Number(event.target.value))} className="mt-1 w-full bg-transparent text-sm outline-none">
+          <select value={guests} onChange={(event) => setGuests(Number(event.target.value))} className="mt-1 w-full bg-transparent text-sm font-medium outline-none">
             {Array.from({ length: villa.maxGuests }, (_, index) => index + 1).map((count) => (
               <option key={count} value={count}>
                 {count}
@@ -46,9 +46,9 @@ export function HeroSearch({ locale }: { locale: Locale }) {
             ))}
           </select>
         </label>
-        <label className="rounded-2xl px-3 py-2">
+        <label className="rounded-2xl px-4 py-3 md:border-l md:border-line">
           <span className="block text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-muted">{locale === "es" ? "Ocasión" : "Occasion"}</span>
-          <select value={occasion} onChange={(event) => setOccasion(event.target.value)} className="mt-1 w-full bg-transparent text-sm outline-none">
+          <select value={occasion} onChange={(event) => setOccasion(event.target.value)} className="mt-1 w-full bg-transparent text-sm font-medium outline-none">
             <option value="">{locale === "es" ? "Solo la casa" : "Just the house"}</option>
             {occasions.map((item) => (
               <option key={item.slug} value={item.slug}>
@@ -57,7 +57,7 @@ export function HeroSearch({ locale }: { locale: Locale }) {
             ))}
           </select>
         </label>
-        <button type="button" onClick={go} className="rounded-full bg-coral-deep px-5 py-3 text-sm font-semibold text-white">
+        <button type="button" onClick={go} className="rounded-full bg-coral-deep px-6 py-3 text-sm font-semibold text-white md:self-center">
           {locale === "es" ? "Ver fechas" : "Check dates"}
         </button>
       </div>

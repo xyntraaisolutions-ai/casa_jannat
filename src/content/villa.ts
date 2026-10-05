@@ -19,12 +19,12 @@ export const homeHero = {
 };
 
 export const jacoView = {
-  src: "/images/casa-jannat/jaco-hills.jpg",
+  src: "/images/casa-jannat/jaco-hills-view.jpg",
   width: 2560,
   height: 1440,
   alt: c(
-    "Jacó beach and the Pacific, seen from the green hills above town",
-    "La playa de Jacó y el Pacífico, vistos desde los cerros verdes sobre el pueblo",
+    "Playa Jacó from the hills, a long curve of sand and Pacific surf",
+    "Playa Jacó desde los cerros, una curva larga de arena y oleaje del Pacífico",
   ),
 };
 

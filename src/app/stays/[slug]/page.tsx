@@ -194,7 +194,7 @@ export default async function VillaPage({
             {locale === "es" ? "También en Airbnb" : "Also on Airbnb"}
           </a>
         </div>
-        <div className="lg:sticky lg:top-28 lg:self-start">
+        <div className="lg:sticky lg:top-40 lg:self-start">
           <BookingCard
             locale={locale}
             initialCheckIn={read("checkIn")}

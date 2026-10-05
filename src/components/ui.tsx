@@ -12,7 +12,7 @@ export function Container({
 }
 
 export function PageMain({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`pt-20 md:pt-[7.25rem] ${className}`}>{children}</div>;
+  return <div className={`pt-[7.75rem] md:pt-[10.5rem] ${className}`}>{children}</div>;
 }
 
 export function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {

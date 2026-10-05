@@ -3,7 +3,7 @@ import Link from "next/link";
 import { categoryLabel, experienceFromIsPerPerson, experienceFromPrice, experiences } from "@/content/experiences";
 import { occasions } from "@/content/occasions";
 import { packages, quotePackage } from "@/content/packages";
-import { jacoView, photos, villa } from "@/content/villa";
+import { homeHero, jacoView, photos, villa } from "@/content/villa";
 import { t, type Locale } from "@/lib/copy";
 import { formatMoney } from "@/lib/dates";
 import { rates } from "@/lib/rates";
@@ -17,7 +17,7 @@ export function HomePage({ locale }: { locale: Locale }) {
   const featured = experiences.filter((item) => item.featured);
   return (
     <>
-      <section className="relative h-[70svh] min-h-[520px] text-sand md:h-[calc(100svh-8.5rem)]">
+      <section className="relative h-[72svh] min-h-[540px] text-sand md:h-[calc(100svh-6.75rem)]">
         <Image
           src={jacoView.src}
           alt={t(locale, jacoView.alt)}
@@ -25,50 +25,53 @@ export function HomePage({ locale }: { locale: Locale }) {
           priority
           sizes="100vw"
           quality={90}
-          className="object-cover object-[center_46%]"
+          className="object-cover object-[center_32%]"
         />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ocean-deep/55 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ocean-deep/70 to-transparent md:h-56" />
-        <Container className="relative flex h-full flex-col justify-end pb-8 pt-28 md:pb-14">
-          <Eyebrow light>{locale === "es" ? "Jacó, desde los cerros" : "Jacó, from the hills"}</Eyebrow>
-          <h1 className="mt-3 max-w-4xl font-display text-5xl leading-[0.92] md:text-8xl">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ocean-deep/48 via-ocean-deep/8 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ocean-deep/28 to-transparent" />
+        <Container className="relative flex h-full flex-col justify-end pb-24 pt-36 md:pb-28">
+          <Eyebrow light>{locale === "es" ? "La costa de Jacó" : "The coast of Jacó"}</Eyebrow>
+          <h1 className="mt-3 font-display text-5xl leading-[0.92] drop-shadow-[0_2px_18px_rgb(8_38_44/0.45)] md:text-7xl">
             Casa Jannat
-            <span className="mt-2 block max-w-2xl font-display text-2xl italic text-sand/90 md:text-4xl">
+            <span className="mt-2 block font-display text-2xl italic text-sand/95 md:text-4xl">
               {locale === "es" ? "un pedacito de paraíso" : "a little piece of paradise"}
             </span>
           </h1>
-          <p className="mt-4 max-w-md text-base text-sand/90 md:text-lg">
+          <p className="mt-4 max-w-md text-base leading-relaxed text-sand/95 md:text-lg">
             {locale === "es"
-              ? "La playa larga queda justo abajo. La casa, con piscina privada, está a unos minutos de la arena."
-              : "The long beach sits just below. The house, with its private pool, is a few minutes from the sand."}
+              ? "Piscina privada, cuatro recámaras, y esta playa a un corto paseo de la casa."
+              : "A private pool, four bedrooms, and this beach a short walk from the house."}
           </p>
         </Container>
+        <a
+          href="https://commons.wikimedia.org/wiki/File:Playa_Jac%C3%B3.jpg"
+          className="absolute bottom-20 right-5 text-[0.65rem] text-sand/80 underline decoration-white/30 underline-offset-2 md:bottom-24 md:right-8"
+        >
+          {locale === "es" ? "Foto: Pantar, CC BY-SA" : "Photo: Pantar, CC BY-SA"}
+        </a>
       </section>
 
-      <section className="relative z-10 md:-mt-6">
+      <section className="relative z-10 -mt-14 bg-sand pb-2 md:-mt-16">
         <Container>
           <HeroSearch locale={locale} />
+          <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              `★ ${villa.rating.score} · ${villa.rating.count} ${locale === "es" ? "estadías" : "stays"}`,
+              locale === "es" ? "Piscina privada" : "Private pool",
+              locale === "es" ? "Entrada con caja de seguridad" : "Lockbox check-in",
+              locale === "es" ? `Código ${rates.promoCode} al reservar directo` : `Code ${rates.promoCode} when you book direct`,
+            ].map((item) => (
+              <li key={item} className="rounded-2xl bg-white px-4 py-2.5 text-sm text-ocean ring-1 ring-ocean/10">
+                {item}
+              </li>
+            ))}
+          </ul>
         </Container>
       </section>
 
       <section className="border-b border-line bg-white" aria-label="Casa Jannat">
-        <Container className="flex justify-center px-5 py-12 sm:py-16 md:py-20">
+        <Container className="flex justify-center px-5 py-10 sm:py-14">
           <CasaBanner locale={locale} />
-        </Container>
-      </section>
-
-      <section className="border-b border-line bg-sand">
-        <Container className="grid gap-4 py-5 text-sm sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            `★ ${villa.rating.score} · ${villa.rating.count} ${locale === "es" ? "huéspedes" : "guests"}`,
-            locale === "es" ? "Piscina privada" : "Private pool",
-            locale === "es" ? "Entrada con caja de seguridad" : "Lockbox check-in",
-            locale === "es" ? `Código ${rates.promoCode} al reservar directo` : `Code ${rates.promoCode} when you book direct`,
-          ].map((item) => (
-            <p key={item} className="border-line sm:border-l sm:pl-4 first:border-0 first:pl-0">
-              {item}
-            </p>
-          ))}
         </Container>
       </section>
 
@@ -298,8 +301,8 @@ export function HomePage({ locale }: { locale: Locale }) {
       </section>
 
       <section className="relative min-h-[70vh] text-sand">
-        <Image src={jacoView.src} alt="" fill className="object-cover object-[center_46%]" sizes="100vw" quality={90} />
-        <div className="absolute inset-0 bg-ocean-deep/70" />
+        <Image src={homeHero.src} alt="" fill className="object-cover object-center" sizes="100vw" quality={90} />
+        <div className="absolute inset-0 bg-ocean-deep/65" />
         <Container className="relative py-24">
           <h2 className="max-w-2xl font-display text-5xl leading-tight md:text-6xl">
             {locale === "es" ? "El Pacífico queda a un corto paseo. La piscina es tuya." : "The Pacific is a short walk. The pool is yours."}
