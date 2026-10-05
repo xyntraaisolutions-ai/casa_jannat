@@ -42,6 +42,12 @@ body {
   scroll-margin-top: 7.5rem;
 }
 
+@media (max-width: 767px) {
+  html[data-consent="open"] .mobile-dock {
+    bottom: 5.5rem;
+  }
+}
+
 .arch {
   border-radius: 12rem 12rem 1.25rem 1.25rem;
 }

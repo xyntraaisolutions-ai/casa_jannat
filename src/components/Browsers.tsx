@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { categoryLabel, experienceFromIsPerPerson, experienceFromPrice, experiences, type ExpCategory } from "@/content/experiences";
 import { photos, villa } from "@/content/villa";
+import { ArchMark } from "./Logo";
 import { formatMoney } from "@/lib/dates";
 import { localizeHref, t, type Locale } from "@/lib/copy";
 import { rates } from "@/lib/rates";
@@ -56,10 +57,15 @@ export function StaysBrowser({ locale }: { locale: Locale }) {
             <div className="relative h-72">
               <Image src="/images/casa-jannat/hero-pool.jpg" alt={t(locale, photos[0].alt)} fill className="object-cover transition duration-700 group-hover:scale-105" sizes="(min-width: 1024px) 50vw, 100vw" />
             </div>
-            <div className="p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-jungle">Jacó</p>
-              <h2 className="mt-2 font-display text-4xl text-ocean">Casa Jannat</h2>
-              <p className="mt-2 text-muted">{t(locale, villa.summary)}</p>
+            <div className="p-5 sm:p-6">
+              <div className="flex items-center gap-4">
+                <ArchMark className="h-16 w-12 shrink-0 sm:h-20 sm:w-[3.8rem]" />
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-jungle">Jacó</p>
+                  <h2 className="mt-1 font-display text-3xl leading-none text-ocean sm:text-4xl">Casa Jannat</h2>
+                </div>
+              </div>
+              <p className="mt-4 text-muted">{t(locale, villa.summary)}</p>
               <p className="mt-4 text-sm">
                 {villa.maxGuests} {locale === "es" ? "huéspedes" : "guests"} · {villa.bedrooms} {locale === "es" ? "recámaras" : "bedrooms"} · {villa.bathrooms} {locale === "es" ? "baños" : "baths"}
               </p>

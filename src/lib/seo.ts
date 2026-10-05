@@ -8,12 +8,14 @@ export function buildMetadata({
   title,
   description,
   absolute = false,
+  image,
 }: {
   locale: Locale;
   path: string;
   title: string;
   description: string;
   absolute?: boolean;
+  image?: { url: string; width: number; height: number; alt: string };
 }): Metadata {
   const bare = path === "/" ? "" : path;
   const en = `${site.url}${path === "/" ? "/" : path}`;
@@ -34,7 +36,7 @@ export function buildMetadata({
       locale: locale === "es" ? "es_CR" : "en_US",
       type: "website",
       images: [
-        {
+        image ?? {
           url: "/images/casa-jannat/hero-pool.jpg",
           width: 1200,
           height: 1600,

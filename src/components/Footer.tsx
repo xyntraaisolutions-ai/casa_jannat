@@ -1,4 +1,4 @@
-import { FacebookIcon, InstagramIcon, Logo } from "./Logo";
+import { FacebookIcon, InstagramIcon, JacoLogo } from "./Logo";
 import { Container, LocaleLink } from "./ui";
 import { t, type Locale } from "@/lib/copy";
 import { site } from "@/lib/site";
@@ -10,11 +10,13 @@ export function Footer({ locale }: { locale: Locale }) {
     <footer className="bg-ocean-deep text-sand">
       <Container className="grid gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-4">
-          <Logo locale={locale} light />
+          <LocaleLink locale={locale} href="/" aria-label="Jaco Escape" className="inline-flex max-w-full">
+            <JacoLogo locale={locale} variant="footer" />
+          </LocaleLink>
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-sand/75">
             {locale === "es"
-              ? "Una casa en Jacó. Piscina privada, cuatro recámaras y el Pacífico a un corto paseo. Las experiencias se suman al mismo viaje."
-              : "A house in Jacó. Private pool, four bedrooms, and the Pacific a short walk away. Experiences join the same trip."}
+              ? "Estadías y experiencias en el Pacífico. Casa Jannat es la casa: piscina privada en Jacó, y el resto del viaje se arma en el mismo lugar."
+              : "Stays and experiences on the Pacific. Casa Jannat is the house: a private pool in Jacó, and the rest of the trip is arranged in the same place."}
           </p>
         </div>
         <div className="md:col-span-2">
@@ -66,7 +68,7 @@ export function Footer({ locale }: { locale: Locale }) {
       </Container>
       <div className="border-t border-white/10">
         <Container className="flex flex-col gap-3 py-5 text-xs text-sand/60 md:flex-row md:items-center md:justify-between">
-          <p>© {year} Casa Jannat · Jacó, Puntarenas</p>
+          <p>© {year} Jaco Escape · Jacó, Costa Rica</p>
           <ul className="flex flex-wrap gap-4">
             <li><LocaleLink locale={locale} href="/policies/cancellation" className="hover:text-sand">{locale === "es" ? "Cancelación" : "Cancellation"}</LocaleLink></li>
             <li><LocaleLink locale={locale} href="/policies/house-rules" className="hover:text-sand">{locale === "es" ? "Reglas" : "House rules"}</LocaleLink></li>

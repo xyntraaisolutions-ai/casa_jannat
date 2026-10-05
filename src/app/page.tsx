@@ -1,6 +1,6 @@
 import { HomePage } from "@/components/HomePage";
 import { JsonLd } from "@/components/JsonLd";
-import { villa } from "@/content/villa";
+import { homeHero, villa } from "@/content/villa";
 import { getLocale } from "@/lib/locale";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -17,6 +17,12 @@ export async function generateMetadata() {
       locale === "es"
         ? "Piscina privada, cuatro recámaras y la playa a unos minutos en Jacó, Costa Rica. Reserva directa."
         : "Private pool, four bedrooms, and the beach just minutes away in Jacó, Costa Rica. Book direct.",
+    image: {
+      url: homeHero.src,
+      width: homeHero.width,
+      height: homeHero.height,
+      alt: locale === "es" ? homeHero.alt.es : homeHero.alt.en,
+    },
   });
 }
 
@@ -31,7 +37,7 @@ export default async function Page() {
           name: "Casa Jannat",
           description: villa.summary.en,
           url: site.url,
-          image: [`${site.url}/images/casa-jannat/hero-pool.jpg`],
+          image: [`${site.url}${homeHero.src}`],
           address: {
             "@type": "PostalAddress",
             addressLocality: "Jacó",

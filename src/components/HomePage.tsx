@@ -3,13 +3,14 @@ import Link from "next/link";
 import { categoryLabel, experienceFromIsPerPerson, experienceFromPrice, experiences } from "@/content/experiences";
 import { occasions } from "@/content/occasions";
 import { packages, quotePackage } from "@/content/packages";
-import { photos, villa } from "@/content/villa";
+import { homeHero, photos, villa } from "@/content/villa";
 import { t, type Locale } from "@/lib/copy";
 import { formatMoney } from "@/lib/dates";
 import { rates } from "@/lib/rates";
 import { QuickAdd } from "./AddButtons";
 import { HeroSearch } from "./HeroSearch";
 import { Newsletter } from "./Forms";
+import { CasaBanner } from "./Logo";
 import { Container, Eyebrow, LocaleLink } from "./ui";
 
 export function HomePage({ locale }: { locale: Locale }) {
@@ -18,15 +19,16 @@ export function HomePage({ locale }: { locale: Locale }) {
     <>
       <section className="relative min-h-[100svh] text-sand">
         <Image
-          src={photos[0].src}
-          alt={t(locale, photos[0].alt)}
+          src={homeHero.src}
+          alt={t(locale, homeHero.alt)}
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_30%]"
+          quality={90}
+          className="object-cover object-[center_58%] md:object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ocean-deep via-ocean-deep/35 to-ocean-deep/25" />
-        <Container className="relative flex min-h-[100svh] flex-col justify-end pb-10 pt-32">
+        <Container className="relative flex min-h-[100svh] flex-col justify-end pb-36 pt-28 md:pb-10 md:pt-32">
           <Eyebrow light>{t(locale, villa.tagline)}</Eyebrow>
           <h1 className="mt-4 max-w-4xl font-display text-5xl leading-[0.95] md:text-7xl">
             {locale === "es" ? (
@@ -47,6 +49,12 @@ export function HomePage({ locale }: { locale: Locale }) {
               : "Private pool, four bedrooms, and the beach just minutes away."}
           </p>
           <HeroSearch locale={locale} />
+        </Container>
+      </section>
+
+      <section className="border-b border-line bg-white" aria-label="Casa Jannat">
+        <Container className="flex justify-center px-5 py-12 sm:py-16 md:py-20">
+          <CasaBanner locale={locale} />
         </Container>
       </section>
 
@@ -291,7 +299,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       </section>
 
       <section className="relative min-h-[70vh] text-sand">
-        <Image src={photos[0].src} alt="" fill className="object-cover" sizes="100vw" />
+        <Image src={homeHero.src} alt="" fill className="object-cover object-center" sizes="100vw" quality={90} />
         <div className="absolute inset-0 bg-ocean-deep/70" />
         <Container className="relative py-24">
           <h2 className="max-w-2xl font-display text-5xl leading-tight md:text-6xl">

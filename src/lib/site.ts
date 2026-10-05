@@ -1,8 +1,10 @@
 import type { Locale } from "./copy";
 
 export const site = {
-  name: "Casa Jannat",
+  name: "Jaco Escape",
+  house: "Casa Jannat",
   slogan: { en: "A Little Piece of Paradise", es: "Un Pedacito de Paraíso" },
+  collection: { en: "Stays & experiences · Costa Rica", es: "Estadías y experiencias · Costa Rica" },
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://casajannatjaco.com",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "stay@casajannat.com",
   /** Digits only, country code included, no plus. Leave empty until the host line is live. */

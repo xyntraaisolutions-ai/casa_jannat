@@ -1,5 +1,8 @@
 export type Locale = "en" | "es";
 
+/** Remembers the visitor's language. English is the default until they choose Spanish. */
+export const LOCALE_COOKIE = "casa-jannat-locale";
+
 export type Copy = {
   en: string;
   es: string;

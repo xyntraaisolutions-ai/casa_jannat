@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X, Search } from "lucide-react";
-import { barePath, localizeHref, t, type Locale } from "@/lib/copy";
+import { barePath, LOCALE_COOKIE, localizeHref, t, type Locale } from "@/lib/copy";
 import { occasions } from "@/content/occasions";
-import { Logo } from "./Logo";
+import { JacoLogo } from "./Logo";
 import { useTrip } from "./TripProvider";
 import { SearchDialog } from "./SearchDialog";
 
@@ -47,7 +47,13 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
   const solid = !home || scrolled || open;
   const [pathname, query = ""] = path.split("?");
   const bareOnly = barePath(pathname);
-  const otherLocaleHref = `${locale === "en" ? (bareOnly === "/" ? "/es" : `/es${bareOnly}`) : bareOnly}${query ? `?${query}` : ""}`;
+  const querySuffix = query ? `?${query}` : "";
+  const englishHref = `${bareOnly === "/" ? "/" : bareOnly}${querySuffix}`;
+  const spanishHref = `${bareOnly === "/" ? "/es" : `/es${bareOnly}`}${querySuffix}`;
+
+  function rememberLocale(next: Locale) {
+    document.cookie = `${LOCALE_COOKIE}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`;
+  }
 
   return (
     <header className={`fixed inset-x-0 top-0 z-40 ${solid ? "bg-sand/95 text-ocean shadow-[0_1px_0_rgba(14,59,67,0.08)] backdrop-blur" : "bg-transparent text-sand"}`}>
@@ -56,8 +62,8 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
         <p>{locale === "es" ? "Reserva directa · precios en USD" : "Direct booking · prices in USD"}</p>
       </div>
       <div className="flex h-16 items-center justify-between gap-4 px-5 md:h-[4.25rem] md:px-8">
-        <Link href={localizeHref(locale, "/")} aria-label="Casa Jannat">
-          <Logo locale={locale} light={!solid} />
+        <Link href={localizeHref(locale, "/")} aria-label="Jaco Escape" className="min-w-0 shrink">
+          <JacoLogo locale={locale} light={!solid} />
         </Link>
         <nav className="hidden items-center gap-7 lg:flex" aria-label={locale === "es" ? "Principal" : "Primary"}>
           {links.map((link) => {
@@ -110,13 +116,32 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
           >
             <Search className="h-5 w-5" />
           </button>
-          <Link
-            href={otherLocaleHref}
-            hrefLang={locale === "en" ? "es" : "en"}
-            className="hidden rounded-full px-2 py-1 text-xs font-semibold tracking-wider sm:inline"
+          <div
+            className={`flex items-center rounded-full border p-0.5 text-[0.65rem] font-semibold tracking-wider ${solid ? "border-ocean/20" : "border-sand/40"}`}
+            role="group"
+            aria-label={locale === "es" ? "Idioma" : "Language"}
           >
-            {locale === "en" ? "ES" : "EN"}
-          </Link>
+            <a
+              href={englishHref}
+              hrefLang="en"
+              lang="en"
+              aria-current={locale === "en" ? "true" : undefined}
+              onClick={() => rememberLocale("en")}
+              className={`rounded-full px-2 py-1 ${locale === "en" ? (solid ? "bg-ocean text-sand" : "bg-sand text-ocean") : "opacity-70"}`}
+            >
+              EN
+            </a>
+            <a
+              href={spanishHref}
+              hrefLang="es"
+              lang="es"
+              aria-current={locale === "es" ? "true" : undefined}
+              onClick={() => rememberLocale("es")}
+              className={`rounded-full px-2 py-1 ${locale === "es" ? (solid ? "bg-ocean text-sand" : "bg-sand text-ocean") : "opacity-70"}`}
+            >
+              ES
+            </a>
+          </div>
           <Link
             href={localizeHref(locale, "/trip")}
             className={`relative hidden rounded-full px-3 py-2 text-sm font-semibold sm:inline ${solid ? "text-ocean" : "text-sand"}`}
@@ -175,9 +200,14 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
             <Link href={localizeHref(locale, "/trip")} className="rounded-full border border-ocean px-4 py-2 text-sm font-semibold">
               {locale === "es" ? `Viaje (${count})` : `Trip (${count})`}
             </Link>
-            <Link href={otherLocaleHref} className="rounded-full border border-line px-4 py-2 text-sm font-semibold">
+            <a
+              href={locale === "en" ? spanishHref : englishHref}
+              hrefLang={locale === "en" ? "es" : "en"}
+              onClick={() => rememberLocale(locale === "en" ? "es" : "en")}
+              className="rounded-full border border-line px-4 py-2 text-sm font-semibold"
+            >
               {locale === "en" ? "Español" : "English"}
-            </Link>
+            </a>
           </div>
         </div>
       ) : null}

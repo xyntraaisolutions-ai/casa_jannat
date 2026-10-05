@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BookingCard } from "@/components/BookingCard";
+import { CasaBanner } from "@/components/Logo";
 import { Gallery } from "@/components/Gallery";
 import { JsonLd } from "@/components/JsonLd";
 import { Container, Crumbs, LocaleLink, PageMain } from "@/components/ui";
@@ -77,8 +78,9 @@ export default async function VillaPage({
       <Container className="grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">
         <div>
           <p className="text-sm text-muted">{t(locale, villa.location)}</p>
-          <h1 className="mt-2 font-display text-5xl text-ocean md:text-6xl">Casa Jannat</h1>
-          <p className="mt-2 font-display text-2xl italic text-jungle">{t(locale, villa.tagline)}</p>
+          <div className="mt-4">
+            <CasaBanner locale={locale} heading compact />
+          </div>
           <p className="mt-4 text-sm">
             {locale === "es" ? "Casa completa en Jacó" : "Entire home in Jacó"} · {villa.bedrooms} {locale === "es" ? "recámaras" : "bedrooms"} · {villa.bathrooms}{" "}
             {locale === "es" ? "baños" : "baths"} · {locale === "es" ? "piscina privada" : "private pool"}
@@ -202,7 +204,7 @@ export default async function VillaPage({
           />
         </div>
       </Container>
-      <div className="fixed inset-x-0 bottom-0 z-20 flex items-center justify-between border-t border-line bg-sand/95 px-4 py-3 pr-40 backdrop-blur md:hidden">
+      <div className="mobile-dock fixed inset-x-0 bottom-0 z-20 flex items-center justify-between border-t border-line bg-sand/95 px-4 py-3 pr-40 backdrop-blur md:hidden">
         <p className="text-sm">
           <span className="font-semibold">{formatMoney(rates.green, locale)}</span>
           <span className="text-muted"> {locale === "es" ? "/ noche" : "/ night"}</span>

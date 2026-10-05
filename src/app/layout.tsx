@@ -25,11 +25,11 @@ const sans = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Casa Jannat",
-    template: "%s · Casa Jannat",
+    default: "Jaco Escape",
+    template: "%s · Jaco Escape",
   },
-  description: "Private pool, four bedrooms, and the beach a short walk away in Jacó, Costa Rica.",
-  applicationName: "Casa Jannat",
+  description: "Stays and experiences on the Pacific coast. Casa Jannat is a private-pool house in Jacó, Costa Rica.",
+  applicationName: "Jaco Escape",
 };
 
 export const viewport: Viewport = {

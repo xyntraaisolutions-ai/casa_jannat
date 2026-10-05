@@ -8,6 +8,16 @@ export type Photo = {
   room: "pool" | "living" | "bedrooms" | "bath";
 };
 
+export const homeHero = {
+  src: "/images/casa-jannat/hero-home.jpg",
+  width: 2560,
+  height: 1440,
+  alt: c(
+    "Round spa and private pool at Casa Jannat in Jacó, with palms and a sunset sky",
+    "Spa circular y piscina privada en Casa Jannat, Jacó, con palmeras y cielo de atardecer",
+  ),
+};
+
 export const photos: Photo[] = [
   {
     src: "/images/casa-jannat/hero-pool.jpg",
