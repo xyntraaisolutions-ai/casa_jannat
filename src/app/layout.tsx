@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Floaters } from "@/components/Floaters";
 import { Header } from "@/components/Header";
 import { TripProvider } from "@/components/TripProvider";
+import { homeHero } from "@/content/villa";
 import { getLocale, getRequestPath } from "@/lib/locale";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -22,14 +23,56 @@ const sans = Manrope({
   display: "swap",
 });
 
+const shareImage = {
+  url: homeHero.src,
+  width: homeHero.width,
+  height: homeHero.height,
+  alt: homeHero.alt.en,
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: "Jaco Escape",
     template: "%s · Jaco Escape",
   },
-  description: "Stays and experiences on the Pacific coast. Casa Jannat is a private-pool house in Jacó, Costa Rica.",
+  description: site.description.en,
   applicationName: "Jaco Escape",
+  authors: [{ name: "Jaco Escape", url: site.url }],
+  creator: "Jaco Escape",
+  keywords: [
+    "Casa Jannat",
+    "Jaco Escape",
+    "Jacó vacation rental",
+    "private pool Jacó",
+    "Costa Rica villa",
+    "Jacó experiences",
+  ],
+  category: "travel",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    title: "Jaco Escape",
+    description: site.description.en,
+    locale: "en_US",
+    alternateLocale: ["es_CR"],
+    images: [shareImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jaco Escape",
+    description: site.description.en,
+    images: [homeHero.src],
+  },
+  appleWebApp: {
+    title: "Jaco Escape",
+    statusBarStyle: "default",
+  },
 };
 
 export const viewport: Viewport = {

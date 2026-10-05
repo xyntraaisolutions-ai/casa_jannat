@@ -8,7 +8,7 @@ export function SunsetO({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
       <circle cx="24" cy="24" r="20.25" fill="none" stroke="currentColor" strokeWidth="2.15" />
-      <path d="M13.2 26.2a10.8 10.8 0 0 0 21.6 0Z" fill={sun} />
+      <path d="M13.2 26.2a10.8 10.8 0 0 1 21.6 0Z" fill={sun} />
       <path
         d="M14 33.2c2.6-2.5 5.1.6 7.8-1.6 2.6-2.1 5 .5 7.7-1.6"
         fill="none"
@@ -35,7 +35,7 @@ export function ArchMark({
         fill={arch}
         d="M12 104V50C12 32 20 16 32 8c4-2.4 7.2-4 8-4.6 0.8 0.6 4 2.2 8 4.6 12 8 20 24 20 42v54H12Z"
       />
-      <path d="M27.5 60.5a12.5 12.5 0 0 0 25 0Z" fill={sun} />
+      <path d="M27.5 60.5a12.5 12.5 0 0 1 25 0Z" fill={sun} />
       <path
         d="M24 71c3.6-2.6 6.4 1.6 10.2-.6 3.6-2 6.6 1.4 10.2-.4M22 79.5c4-2.8 7.2 1.8 11.4-.6 4-2.2 7.4 1.6 11.4-.4M24 88c3.6-2.6 6.4 1.6 10.2-.6 3.6-2 6.6 1.4 10.2-.4"
         fill="none"

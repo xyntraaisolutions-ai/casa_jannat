@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { homeHero } from "@/content/villa";
 import type { Locale } from "./copy";
 import { site } from "./site";
 
@@ -21,6 +22,12 @@ export function buildMetadata({
   const en = `${site.url}${path === "/" ? "/" : path}`;
   const es = `${site.url}/es${bare}`;
   const canonical = locale === "es" ? es : en;
+  const share = image ?? {
+    url: homeHero.src,
+    width: homeHero.width,
+    height: homeHero.height,
+    alt: locale === "es" ? homeHero.alt.es : homeHero.alt.en,
+  };
   return {
     title: absolute ? { absolute: title } : title,
     description,
@@ -34,15 +41,15 @@ export function buildMetadata({
       url: canonical,
       siteName: site.name,
       locale: locale === "es" ? "es_CR" : "en_US",
+      alternateLocale: locale === "es" ? ["en_US"] : ["es_CR"],
       type: "website",
-      images: [
-        image ?? {
-          url: "/images/casa-jannat/hero-pool.jpg",
-          width: 1200,
-          height: 1600,
-          alt: "Private pool and spa at Casa Jannat in Jacó at sunset",
-        },
-      ],
+      images: [share],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [share.url],
     },
   };
 }

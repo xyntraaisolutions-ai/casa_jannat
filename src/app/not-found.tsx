@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { LocaleLink } from "@/components/ui";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  description: "This page is not on Jaco Escape. Casa Jannat, the private-pool house in Jacó, is still here.",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (

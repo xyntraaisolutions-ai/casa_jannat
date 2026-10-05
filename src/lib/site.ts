@@ -5,6 +5,10 @@ export const site = {
   house: "Casa Jannat",
   slogan: { en: "A Little Piece of Paradise", es: "Un Pedacito de Paraíso" },
   collection: { en: "Stays & experiences · Costa Rica", es: "Estadías y experiencias · Costa Rica" },
+  description: {
+    en: "Jaco Escape books Casa Jannat, a four-bedroom private-pool house in Jacó, Costa Rica, plus chef, fishing, transfers, and the rest of the trip.",
+    es: "Jaco Escape reserva Casa Jannat, una casa de cuatro recámaras con piscina privada en Jacó, Costa Rica, más chef, pesca, traslados y el resto del viaje.",
+  },
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://casajannatjaco.com",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "stay@casajannat.com",
   /** Digits only, country code included, no plus. Leave empty until the host line is live. */

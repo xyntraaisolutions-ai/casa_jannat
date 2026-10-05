@@ -13,10 +13,7 @@ export async function generateMetadata() {
     path: "/",
     absolute: true,
     title: locale === "es" ? "Casa Jannat — Un pedacito de paraíso en Jacó" : "Casa Jannat — A Little Piece of Paradise in Jacó",
-    description:
-      locale === "es"
-        ? "Piscina privada, cuatro recámaras y la playa a unos minutos en Jacó, Costa Rica. Reserva directa."
-        : "Private pool, four bedrooms, and the beach just minutes away in Jacó, Costa Rica. Book direct.",
+    description: site.description[locale],
     image: {
       url: homeHero.src,
       width: homeHero.width,
