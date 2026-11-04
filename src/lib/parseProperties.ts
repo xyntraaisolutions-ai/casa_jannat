@@ -52,3 +52,9 @@ export function requireProp(props: Record<string, string>, key: string): string 
 export function optionalProp(props: Record<string, string>, key: string, fallback = ""): string {
   return props[key] ?? fallback;
 }
+
+/** Pulls `src="..."` from the iframe snippet in `src/seenstay_embed.txt`. */
+export function parseSeenStayEmbedSrc(text: string): string {
+  const match = text.match(/\bsrc\s*=\s*["']([^"']+)["']/i);
+  return match?.[1]?.trim() ?? "";
+}
