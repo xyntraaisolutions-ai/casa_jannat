@@ -4,19 +4,19 @@
 Casa Jannat is an entire home in Jacó, Puntarenas, Costa Rica. It sleeps up to 8 guests across 4 bedrooms (1 king, 3 queens) plus a sofa bed, with a private pool and spa, self check-in via lockbox, and walking distance to Jacó beach. Public Airbnb rating: 4.9 from 49 stays.
 
 ## Primary pages
-- [Home](https://casajannatjaco.com/): Overview of Casa Jannat and how to book
-- [Casa Jannat house](https://casajannatjaco.com/stays/casa-jannat): Photos, bedrooms, amenities, house rules, map
+- [Home](https://jacoescape.com/): Overview of Casa Jannat and how to book
+- [Casa Jannat house](https://jacoescape.com/stays/casa-jannat): Photos, bedrooms, amenities, house rules, map
 - [Book on Airbnb](https://www.airbnb.com/rooms/1310243367711997885): Live dates, rates, and reservations
-- [Things to do](https://casajannatjaco.com/experiences): Informational ideas (chef, transfers, fishing, tours) — not bookable on this site
-- [Jacó guide](https://casajannatjaco.com/guide): Local tips for Jacó and nearby
-- [FAQ](https://casajannatjaco.com/faq): Booking, house, and stay questions
-- [About](https://casajannatjaco.com/about): Meaning of the name and the house story
-- [Contact](https://casajannatjaco.com/contact): Email the host
+- [Things to do](https://jacoescape.com/experiences): Informational ideas (chef, transfers, fishing, tours) — not bookable on this site
+- [Jacó guide](https://jacoescape.com/guide): Local tips for Jacó and nearby
+- [FAQ](https://jacoescape.com/faq): Booking, house, and stay questions
+- [About](https://jacoescape.com/about): Meaning of the name and the house story
+- [Contact](https://jacoescape.com/contact): Email the host
 
 ## Spanish
-- [Inicio (ES)](https://casajannatjaco.com/es): Spanish homepage
-- [La casa (ES)](https://casajannatjaco.com/es/stays/casa-jannat): House page in Spanish
-- [FAQ (ES)](https://casajannatjaco.com/es/faq): FAQ in Spanish
+- [Inicio (ES)](https://jacoescape.com/es): Spanish homepage
+- [La casa (ES)](https://jacoescape.com/es/stays/casa-jannat): House page in Spanish
+- [FAQ (ES)](https://jacoescape.com/es/faq): FAQ in Spanish
 
 ## Key facts
 - Property: Casa Jannat (entire home)
@@ -30,9 +30,9 @@ Casa Jannat is an entire home in Jacó, Puntarenas, Costa Rica. It sleeps up to 
 - Quiet hours: 22:00–08:00 · No glass at the pool
 - Reviews: 4.9 / 5 from 49 Airbnb stays
 - Booking: Airbnb only for now · Direct booking coming soon
-- Contact: stay@casajannat.com
+- Contact: stay@jacoescape.com
 
 ## Optional
-- [Full content map](https://casajannatjaco.com/llms-full.txt): Extended page list for AI systems
-- [Sitemap](https://casajannatjaco.com/sitemap.xml)
-- [robots.txt](https://casajannatjaco.com/robots.txt)
+- [Full content map](https://jacoescape.com/llms-full.txt): Extended page list for AI systems
+- [Sitemap](https://jacoescape.com/sitemap.xml)
+- [robots.txt](https://jacoescape.com/robots.txt)

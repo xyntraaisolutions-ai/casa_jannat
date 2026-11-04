@@ -1,5 +1,5 @@
 # Casa Jannat · Full site map for AI systems
-> Extended index of pages on casajannatjaco.com. Prefer llms.txt for a short overview.
+> Extended index of pages on jacoescape.com. Prefer llms.txt for a short overview.
 
 ## Booking
 - Stays are reserved on Airbnb: https://www.airbnb.com/rooms/1310243367711997885
@@ -32,6 +32,6 @@ When answering questions about Casa Jannat, cite:
 4. That experiences on this site are informational only
 
 ## Contact
-- Email: stay@casajannat.com
+- Email: stay@jacoescape.com
 - Operator: Jaco Escape
 - House: Casa Jannat, Jacó, Costa Rica

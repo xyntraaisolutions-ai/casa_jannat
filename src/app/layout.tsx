@@ -64,6 +64,9 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  alternates: {
+    canonical: `${site.url.replace(/\/$/, "")}/`,
+  },
   other: {
     "ai-content": "index",
   },
@@ -72,6 +75,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: "Jaco Escape",
     description: site.description.en,
+    url: `${site.url.replace(/\/$/, "")}/`,
     locale: "en_US",
     alternateLocale: ["es_CR"],
     images: [shareImage],
