@@ -115,15 +115,15 @@ export const posts: Post[] = [
       {
         type: "p",
         text: c(
-          "The failure mode is a villa from one site and a boat from a cousin's screenshot. When the house, the transfer, the chef, and the charter live on one plan, a rain delay is a phone call instead of four. Ask for the bachelor weekend package, or build the same shape in the trip planner and change the pieces.",
-          "El fallo es una villa de un sitio y un bote de la captura de un primo. Cuando la casa, el traslado, el chef y el charter viven en un solo plan, un retraso por lluvia es una llamada y no cuatro. Pide el paquete de fin de semana, o arma la misma forma en el planificador y cambia las piezas.",
+          "The failure mode is a villa from one site and a boat from a cousin's screenshot. Book the house on Airbnb first, then arrange the transfer, chef, and charter with the host or local operators so a rain delay is one conversation instead of four.",
+          "El fallo es una villa de un sitio y un bote de la captura de un primo. Reserva la casa en Airbnb primero, y luego coordina el traslado, el chef y el charter con el anfitrión u operadores locales para que un retraso por lluvia sea una conversación y no cuatro.",
         ),
       },
       {
         type: "p",
         text: c(
-          "Tell us the real guest count. Eight is the overnight maximum. If the group is six, say six — the beds and the chef both get better. If someone is thinking of inviting the bar back to the house, that is a conversation before the deposit, not a surprise at midnight.",
-          "Dinos el número real. Ocho es el máximo para dormir. Si el grupo es de seis, di seis: las camas y el chef salen mejor. Si alguien piensa invitar el bar de regreso a la casa, esa conversación es antes del depósito, no una sorpresa a medianoche.",
+          "Tell the host the real guest count. Eight is the overnight maximum. If the group is six, say six — the beds and the chef both get better. If someone is thinking of inviting the bar back to the house, that is a conversation before you book, not a surprise at midnight.",
+          "Dile al anfitrión el número real. Ocho es el máximo para dormir. Si el grupo es de seis, di seis: las camas y el chef salen mejor. Si alguien piensa invitar el bar de regreso a la casa, esa conversación es antes de reservar, no una sorpresa a medianoche.",
         ),
       },
     ],

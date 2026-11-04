@@ -4,9 +4,11 @@ import { Analytics } from "@/components/Analytics";
 import { Footer } from "@/components/Footer";
 import { Floaters } from "@/components/Floaters";
 import { Header } from "@/components/Header";
-import { TripProvider } from "@/components/TripProvider";
+import { JsonLd } from "@/components/JsonLd";
 import { homeHero } from "@/content/villa";
+import { showWebsiteDevInProgress } from "@/lib/loadConstants";
 import { getLocale, getRequestPath } from "@/lib/locale";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -44,15 +46,26 @@ export const metadata: Metadata = {
     "Casa Jannat",
     "Jaco Escape",
     "Jacó vacation rental",
+    "Jacó Airbnb",
     "private pool Jacó",
     "Costa Rica villa",
-    "Jacó experiences",
+    "4 bedroom house Jacó",
+    "family vacation Jacó Costa Rica",
   ],
   category: "travel",
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  other: {
+    "ai-content": "index",
   },
   openGraph: {
     type: "website",
@@ -84,18 +97,19 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
   const path = await getRequestPath();
+  const showDevBanner = showWebsiteDevInProgress();
   return (
     <html lang={locale} data-scroll-behavior="smooth" className={`${display.variable} ${sans.variable} h-full`}>
       <body className="min-h-full bg-sand font-sans text-ink antialiased">
         <a href="#content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-sand focus:px-4 focus:py-2">
           {locale === "es" ? "Saltar al contenido" : "Skip to content"}
         </a>
-        <TripProvider>
-          <Header locale={locale} path={path} />
-          <div id="content">{children}</div>
-          <Footer locale={locale} />
-          <Floaters locale={locale} path={path} />
-        </TripProvider>
+        <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
+        <Header locale={locale} path={path} showWebsiteDevInProgress={showDevBanner} />
+        <div id="content">{children}</div>
+        <Footer locale={locale} />
+        <Floaters locale={locale} path={path} />
         <Analytics />
       </body>
     </html>

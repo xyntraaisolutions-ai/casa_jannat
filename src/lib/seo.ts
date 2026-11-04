@@ -31,6 +31,17 @@ export function buildMetadata({
   return {
     title: absolute ? { absolute: title } : title,
     description,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
     alternates: {
       canonical,
       languages: { en, es, "x-default": en },

@@ -1,10 +1,14 @@
 import { notFound } from "next/navigation";
+import { AirbnbCta } from "@/components/AirbnbCta";
+import { JsonLd } from "@/components/JsonLd";
 import { Container, Crumbs, LocaleLink, PageMain } from "@/components/ui";
 import { getPost, posts } from "@/content/posts";
 import { t } from "@/lib/copy";
 import { formatDate } from "@/lib/dates";
 import { getLocale } from "@/lib/locale";
+import { breadcrumbSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
 
 export function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
@@ -32,6 +36,27 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   return (
     <PageMain className="pb-24">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title.en,
+          description: post.description.en,
+          datePublished: post.date,
+          inLanguage: locale === "es" ? "es" : "en",
+          author: { "@type": "Organization", name: site.name, url: site.url },
+          publisher: { "@type": "Organization", name: site.name, url: site.url, logo: `${site.url}/icon-512.png` },
+          mainEntityOfPage: `${site.url}/guide/${slug}`,
+          about: { "@type": "Place", name: "Jacó", addressCountry: "CR" },
+        }}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: locale === "es" ? "Inicio" : "Home", path: "/" },
+          { name: locale === "es" ? "Guía" : "Guide", path: "/guide" },
+          { name: t(locale, post.title), path: `/guide/${slug}` },
+        ])}
+      />
       <Container className="max-w-3xl">
         <Crumbs
           items={[
@@ -64,6 +89,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             return <p key={index}>{t(locale, block.text)}</p>;
           })}
         </article>
+        <div className="mt-12 rounded-[1.6rem] bg-ocean p-6 text-sand">
+          <p className="font-display text-2xl">Casa Jannat</p>
+          <p className="mt-2 text-sm text-sand/80">
+            {locale === "es"
+              ? "Casa de cuatro recámaras con piscina privada en Jacó. Reserva en Airbnb."
+              : "Four-bedroom private-pool house in Jacó. Book on Airbnb."}
+          </p>
+          <AirbnbCta locale={locale} variant="light" className="mt-4" showNote={false} />
+        </div>
         <div className="mt-12 border-t border-line pt-6">
           <p className="text-sm text-muted">{locale === "es" ? "Sigue" : "Continue"}</p>
           <ul className="mt-3 space-y-2">

@@ -4,30 +4,35 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X, Search } from "lucide-react";
 import { barePath, LOCALE_COOKIE, localizeHref, t, type Locale } from "@/lib/copy";
-import { occasions } from "@/content/occasions";
+import { site } from "@/lib/site";
 import { JacoLogo } from "./Logo";
-import { useTrip } from "./TripProvider";
 import { SearchDialog } from "./SearchDialog";
 
 const links = [
-  { href: "/stays", en: "The house", es: "La casa" },
+  { href: "/stays/casa-jannat", en: "The house", es: "La casa" },
   { href: "/experiences", en: "Experiences", es: "Experiencias" },
-  { href: "/packages", en: "Packages", es: "Paquetes" },
   { href: "/guide", en: "Jacó guide", es: "Guía de Jacó" },
+  { href: "/about", en: "About", es: "Nosotros" },
 ];
 
-export function Header({ locale, path }: { locale: Locale; path: string }) {
+export function Header({
+  locale,
+  path,
+  showWebsiteDevInProgress = false,
+}: {
+  locale: Locale;
+  path: string;
+  /** From server layout — reads constant.properties on each request. */
+  showWebsiteDevInProgress?: boolean;
+}) {
   const bare = barePath(path);
   const home = bare === "/";
-  const { count } = useTrip();
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [occasionsOpen, setOccasionsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setOpen(false);
-    setOccasionsOpen(false);
   }, [path]);
 
   useEffect(() => {
@@ -57,12 +62,14 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-40 ${solid ? "bg-sand/95 text-ocean shadow-[0_1px_0_rgba(14,59,67,0.08)] backdrop-blur" : "bg-transparent text-sand"}`}>
-      <p className="bg-ocean px-4 py-2 text-center text-[0.72rem] font-semibold tracking-wide text-sand">
-        {locale === "es" ? "Este sitio web está en fase de desarrollo." : "This website is in development."}
-      </p>
+      {showWebsiteDevInProgress ? (
+        <p className="bg-ocean px-4 py-2 text-center text-[0.72rem] font-semibold tracking-wide text-sand">
+          {locale === "es" ? "Este sitio web está en fase de desarrollo." : "This website is in development."}
+        </p>
+      ) : null}
       <div className={`hidden items-center justify-between px-8 text-[0.72rem] tracking-wide md:flex ${solid ? "text-muted" : "text-sand/80"} h-8`}>
         <p>Jacó, Puntarenas, Costa Rica</p>
-        <p>{locale === "es" ? "Reserva directa · precios en USD" : "Direct booking · prices in USD"}</p>
+        <p>{locale === "es" ? "Reserva en Airbnb · casa privada" : "Book on Airbnb · private house"}</p>
       </div>
       <div className="flex h-16 items-center justify-between gap-4 px-5 md:h-[4.25rem] md:px-8">
         <Link
@@ -90,33 +97,6 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
               </Link>
             );
           })}
-          <div className="relative" onMouseLeave={() => setOccasionsOpen(false)}>
-            <button
-              type="button"
-              className="text-sm font-medium hover:opacity-70"
-              aria-expanded={occasionsOpen}
-              onClick={() => setOccasionsOpen((value) => !value)}
-              onMouseEnter={() => setOccasionsOpen(true)}
-            >
-              {locale === "es" ? "Ocasiones" : "Occasions"}
-            </button>
-            {occasionsOpen ? (
-              <div className="absolute left-1/2 top-full z-20 w-64 -translate-x-1/2 pt-3">
-                <ul className="rounded-2xl bg-sand p-2 text-ocean shadow-card">
-                  {occasions.map((occasion) => (
-                    <li key={occasion.slug}>
-                      <Link
-                        href={localizeHref(locale, `/occasions/${occasion.slug}`)}
-                        className="block rounded-xl px-3 py-2 text-sm hover:bg-sand-2"
-                      >
-                        {t(locale, occasion.title)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </div>
         </nav>
         <div className="flex items-center gap-2 md:gap-3">
           <button
@@ -153,23 +133,14 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
               ES
             </a>
           </div>
-          <Link
-            href={localizeHref(locale, "/trip")}
-            className={`relative hidden rounded-full px-3 py-2 text-sm font-semibold sm:inline ${solid ? "text-ocean" : "text-sand"}`}
-          >
-            {locale === "es" ? "Viaje" : "Trip"}
-            {count > 0 ? (
-              <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-coral-deep px-1 text-xs text-white">
-                {count}
-              </span>
-            ) : null}
-          </Link>
-          <Link
-            href={localizeHref(locale, "/stays/casa-jannat#reserve")}
+          <a
+            href={site.airbnb}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden rounded-full bg-coral-deep px-4 py-2 text-sm font-semibold text-white hover:bg-ocean md:inline"
           >
             {locale === "es" ? "Reservar" : "Book"}
-          </Link>
+          </a>
           <button
             type="button"
             className="rounded-full p-2 lg:hidden"
@@ -192,25 +163,10 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-jungle">
-            {locale === "es" ? "Ocasiones" : "Occasions"}
-          </p>
-          <ul className="mt-2 grid grid-cols-2 gap-2">
-            {occasions.map((occasion) => (
-              <li key={occasion.slug}>
-                <Link href={localizeHref(locale, `/occasions/${occasion.slug}`)} className="block py-2 text-sm">
-                  {t(locale, occasion.title)}
-                </Link>
-              </li>
-            ))}
-          </ul>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href={localizeHref(locale, "/plan-my-trip")} className="rounded-full border border-ocean px-4 py-2 text-sm font-semibold">
-              {locale === "es" ? "Planear mi viaje" : "Plan my trip"}
-            </Link>
-            <Link href={localizeHref(locale, "/trip")} className="rounded-full border border-ocean px-4 py-2 text-sm font-semibold">
-              {locale === "es" ? `Viaje (${count})` : `Trip (${count})`}
-            </Link>
+            <a href={site.airbnb} target="_blank" rel="noopener noreferrer" className="rounded-full bg-coral-deep px-4 py-2 text-sm font-semibold text-white">
+              {locale === "es" ? "Reservar en Airbnb" : "Book on Airbnb"}
+            </a>
             <a
               href={locale === "en" ? spanishHref : englishHref}
               hrefLang={locale === "en" ? "es" : "en"}
@@ -220,6 +176,9 @@ export function Header({ locale, path }: { locale: Locale; path: string }) {
               {locale === "en" ? "Español" : "English"}
             </a>
           </div>
+          <p className="mt-4 text-xs text-muted">
+            {locale === "es" ? "Reserva directa próximamente." : "Direct booking coming soon."}
+          </p>
         </div>
       ) : null}
       {searchOpen ? <SearchDialog locale={locale} onClose={() => setSearchOpen(false)} /> : null}

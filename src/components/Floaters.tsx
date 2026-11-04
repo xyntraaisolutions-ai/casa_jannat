@@ -11,6 +11,11 @@ export function Floaters({ locale, path }: { locale: Locale; path: string }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    // No analytics configured — nothing to consent to; keep the page clean for launch.
+    if (!site.ga4 && !site.metaPixel) {
+      setConsent("essential");
+      return;
+    }
     const stored = localStorage.getItem("casa-jannat-consent");
     if (stored === "essential" || stored === "all") setConsent(stored);
   }, []);
@@ -40,6 +45,8 @@ export function Floaters({ locale, path }: { locale: Locale; path: string }) {
     <>
       <a
         href={hostHref(message, "Casa Jannat")}
+        target="_blank"
+        rel="noopener noreferrer"
         className={`fixed bottom-24 right-5 z-30 inline-flex items-center gap-2 rounded-full bg-jungle px-4 py-3 text-sm font-semibold text-white shadow-card hover:bg-ocean md:bottom-6 ${home && !scrolled ? "md:hidden" : ""} ${consent === "unknown" || (home && !scrolled) ? "max-md:hidden" : ""}`}
       >
         <MessageCircle className="h-4 w-4" aria-hidden="true" />
@@ -50,8 +57,8 @@ export function Floaters({ locale, path }: { locale: Locale; path: string }) {
           <div className="flex items-center justify-between gap-3 md:block">
           <p className="text-xs leading-snug md:text-sm">
             {locale === "es"
-              ? "Este navegador recuerda tu viaje en el dispositivo. Las analíticas solo se activan si las permites y están configuradas."
-              : "This browser remembers your trip on this device. Analytics run only if you allow them and they are configured."}
+              ? "Las analíticas solo se activan si las permites y están configuradas."
+              : "Analytics run only if you allow them and they are configured."}
           </p>
           <div className="flex shrink-0 gap-2 md:mt-3">
             <button

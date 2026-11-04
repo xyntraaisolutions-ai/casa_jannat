@@ -41,8 +41,8 @@ export default async function AboutPage() {
             </p>
             <p>
               {locale === "es"
-                ? "Si más adelante hay otra casa, seguirá llamándose así la primera. La colección puede crecer. El nombre ya cabe."
-                : "If another house comes later, this one keeps the name. The collection can grow. The name already fits."}
+                ? "Jaco Escape presenta la casa. Hoy se reserva en Airbnb; la reserva directa desde este sitio llega pronto."
+                : "Jaco Escape presents the house. Today it books on Airbnb; direct booking from this site is coming soon."}
             </p>
           </div>
         </div>

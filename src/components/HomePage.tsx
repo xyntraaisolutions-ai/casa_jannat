@@ -1,133 +1,221 @@
 import Image from "next/image";
-import Link from "next/link";
-import { categoryLabel, experienceFromIsPerPerson, experienceFromPrice, experiences } from "@/content/experiences";
-import { occasions } from "@/content/occasions";
-import { packages, quotePackage } from "@/content/packages";
+import { categoryLabel, experiences } from "@/content/experiences";
 import { homeHero, jacoView, photos, villa } from "@/content/villa";
 import { t, type Locale } from "@/lib/copy";
-import { formatMoney } from "@/lib/dates";
-import { rates } from "@/lib/rates";
-import { QuickAdd } from "./AddButtons";
-import { HeroSearch } from "./HeroSearch";
+import { site } from "@/lib/site";
+import { AirbnbCta } from "./AirbnbCta";
 import { Newsletter } from "./Forms";
 import { CasaBanner } from "./Logo";
+import { SeenStayEmbed } from "./SeenStayEmbed";
 import { Container, Eyebrow, LocaleLink } from "./ui";
 
 export function HomePage({ locale }: { locale: Locale }) {
-  const featured = experiences.filter((item) => item.featured);
+  const featured = experiences.filter((item) => item.featured).slice(0, 6);
+  const gallery = [photos[0], photos[1], photos[2], photos[3]];
+
   return (
     <>
-      <section className="relative h-[72svh] min-h-[540px] text-sand md:h-[calc(100svh-6.75rem)]">
+      <section className="relative flex min-h-[100svh] flex-col overflow-hidden text-sand md:min-h-0 md:h-[calc(100svh-6.25rem)]">
         <Image
           src={jacoView.src}
           alt={t(locale, jacoView.alt)}
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           quality={90}
-          className="object-cover object-[center_32%]"
+          className="object-cover object-[42%_center]"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ocean-deep/48 via-ocean-deep/8 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ocean-deep/28 to-transparent" />
-        <Container className="relative flex h-full flex-col justify-end pb-24 pt-36 md:pb-28">
-          <Eyebrow light>{locale === "es" ? "La costa de Jacó" : "The coast of Jacó"}</Eyebrow>
-          <h1 className="mt-3 font-display text-5xl leading-[0.92] drop-shadow-[0_2px_18px_rgb(8_38_44/0.45)] md:text-7xl">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-ocean-deep/70 via-ocean-deep/30 to-transparent md:w-[55%] md:from-ocean-deep/60 md:via-ocean-deep/25" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ocean-deep/45 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ocean-deep/50 to-transparent" />
+        <Container className="relative mt-auto flex flex-col pb-10 pt-32 md:pb-20 md:pt-36">
+          <Eyebrow light>{locale === "es" ? "Jacó, Costa Rica" : "Jacó, Costa Rica"}</Eyebrow>
+          <h1 className="mt-2 max-w-xl font-display text-4xl leading-[0.92] drop-shadow-[0_2px_18px_rgb(8_38_44/0.45)] sm:text-5xl md:mt-3 md:text-7xl">
             Casa Jannat
-            <span className="mt-2 block font-display text-2xl italic text-sand/95 md:text-4xl">
+            <span className="mt-1.5 block font-display text-xl italic text-sand/95 sm:text-2xl md:mt-2 md:text-4xl">
               {locale === "es" ? "un pedacito de paraíso" : "a little piece of paradise"}
             </span>
           </h1>
-          <p className="mt-4 max-w-md text-base leading-relaxed text-sand/95 md:text-lg">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-sand/95 sm:text-base md:mt-4 md:text-lg">
             {locale === "es"
-              ? "Piscina privada, cuatro recámaras, y esta playa a un corto paseo de la casa."
-              : "A private pool, four bedrooms, and this beach a short walk from the house."}
+              ? "Cuatro recámaras, piscina privada, y la playa a un corto paseo."
+              : "Four bedrooms, a private pool, and the beach a short walk away."}
+          </p>
+          <div className="mt-5 flex flex-wrap items-center gap-3 md:mt-7 md:gap-4">
+            <AirbnbCta locale={locale} size="lg" variant="solid" showNote={false} />
+            <LocaleLink
+              locale={locale}
+              href="/stays/casa-jannat"
+              className="inline-flex rounded-full border border-sand/50 px-5 py-3 text-sm font-semibold text-sand backdrop-blur-sm hover:bg-sand/10 md:px-6 md:py-3.5 md:text-base"
+            >
+              {locale === "es" ? "Ver la casa" : "See the house"}
+            </LocaleLink>
+          </div>
+          <p className="mt-2.5 text-[0.7rem] text-sand/75 md:mt-3 md:text-xs">
+            {locale === "es" ? "Reserva directa próximamente · Por ahora, Airbnb" : "Direct booking coming soon · Book on Airbnb for now"}
           </p>
         </Container>
-        <a
-          href="https://commons.wikimedia.org/wiki/File:Playa_Jac%C3%B3.jpg"
-          className="absolute bottom-20 right-5 text-[0.65rem] text-sand/80 underline decoration-white/30 underline-offset-2 md:bottom-24 md:right-8"
-        >
-          {locale === "es" ? "Foto: Pantar, CC BY-SA" : "Photo: Pantar, CC BY-SA"}
-        </a>
       </section>
 
-      <section className="relative z-10 -mt-14 bg-sand pb-2 md:-mt-16">
-        <Container>
-          <HeroSearch locale={locale} />
-          <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              `★ ${villa.rating.score} · ${villa.rating.count} ${locale === "es" ? "estadías" : "stays"}`,
-              locale === "es" ? "Piscina privada" : "Private pool",
-              locale === "es" ? "Entrada con caja de seguridad" : "Lockbox check-in",
-              locale === "es" ? `Código ${rates.promoCode} al reservar directo` : `Code ${rates.promoCode} when you book direct`,
-            ].map((item) => (
-              <li key={item} className="rounded-2xl bg-white px-4 py-2.5 text-sm text-ocean ring-1 ring-ocean/10">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      <section className="border-b border-line bg-white" aria-label="Casa Jannat">
+      <section className="border-b border-line bg-white">
         <Container className="flex justify-center px-5 py-10 sm:py-14">
           <CasaBanner locale={locale} />
         </Container>
       </section>
 
-      <section className="py-20 md:py-28">
-        <Container className="grid items-center gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <Eyebrow>{locale === "es" ? "La casa" : "The house"}</Eyebrow>
-            <h2 className="mt-4 font-display text-5xl leading-tight text-ocean md:text-6xl">
-              {locale === "es" ? "Jannat es la palabra para paraíso." : "Jannat is the word for paradise."}
-            </h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-ink/90">
-              {villa.paragraphs.slice(0, 2).map((paragraph) => (
-                <p key={paragraph.en}>{t(locale, paragraph)}</p>
-              ))}
-            </div>
-            <p className="mt-6 font-display text-3xl text-ocean">
-              {locale === "es" ? "Desde" : "From"} {formatMoney(rates.green, locale)}
-              <span className="ml-2 font-sans text-base text-muted">{locale === "es" ? "/ noche, temporada verde" : "/ night, green season"}</span>
-            </p>
-            <LocaleLink locale={locale} href="/stays/casa-jannat" className="mt-6 inline-flex rounded-full bg-ocean px-5 py-3 text-sm font-semibold text-sand">
-              {locale === "es" ? "Ver la casa" : "See the house"}
-            </LocaleLink>
-          </div>
-          <div className="grid grid-cols-2 gap-3 lg:col-span-7">
-            <div className="arch relative col-span-2 min-h-[420px] overflow-hidden">
-              <Image src={photos[3].src} alt={t(locale, photos[3].alt)} fill className="object-cover" sizes="(min-width: 1024px) 40vw, 100vw" />
-            </div>
-            <div className="relative min-h-48 overflow-hidden rounded-3xl">
-              <Image src={photos[1].src} alt={t(locale, photos[1].alt)} fill className="object-cover" sizes="30vw" />
-            </div>
-            <div className="relative min-h-48 overflow-hidden rounded-3xl">
-              <Image src={photos[2].src} alt={t(locale, photos[2].alt)} fill className="object-cover" sizes="30vw" />
-            </div>
-          </div>
-        </Container>
-        <Container className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {villa.highlights.map((item) => (
-            <p key={item.en} className="rounded-full bg-white px-4 py-3 text-sm">
-              {t(locale, item)}
-            </p>
-          ))}
+      <section className="border-b border-line bg-sand-2/60 py-12 md:py-14" aria-labelledby="casa-facts">
+        <Container>
+          <Eyebrow>{locale === "es" ? "En resumen" : "At a glance"}</Eyebrow>
+          <h2 id="casa-facts" className="mt-3 font-display text-3xl text-ocean md:text-4xl">
+            {locale === "es" ? "Qué es Casa Jannat." : "What Casa Jannat is."}
+          </h2>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink/90 md:text-lg">
+            {locale === "es"
+              ? "Casa Jannat es una casa completa en Jacó, Puntarenas, Costa Rica, operada por Jaco Escape. Tiene cuatro recámaras (una king y tres queens), un sofá cama, tres baños, piscina privada con spa circular, entrada con caja de seguridad y la playa a un corto paseo. Duerme hasta ocho personas. En Airbnb tiene 4.9 de 49 estadías. Hoy se reserva en Airbnb; la reserva directa en este sitio llega pronto."
+              : "Casa Jannat is an entire home in Jacó, Puntarenas, Costa Rica, operated by Jaco Escape. It has four bedrooms (one king and three queens), a sofa bed, three bathrooms, a private pool with a round spa, lockbox check-in, and Jacó beach a short walk away. It sleeps up to eight guests. On Airbnb it is rated 4.9 from 49 stays. Book on Airbnb today; direct booking on this site is coming soon."}
+          </p>
+          <dl className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                dt: locale === "es" ? "Huéspedes" : "Guests",
+                dd: locale === "es" ? `Hasta ${villa.maxGuests}` : `Up to ${villa.maxGuests}`,
+              },
+              {
+                dt: locale === "es" ? "Recámaras" : "Bedrooms",
+                dd: `${villa.bedrooms}`,
+              },
+              {
+                dt: locale === "es" ? "Entrada / salida" : "Check-in / out",
+                dd: `${site.checkIn.slice(0, 2)}:00 · ${site.checkOut.slice(0, 2)}:00`,
+              },
+              {
+                dt: "Airbnb",
+                dd: `★ ${villa.rating.score} · ${villa.rating.count}`,
+              },
+            ].map((row) => (
+              <div key={row.dt} className="border-l-2 border-jungle/35 pl-3">
+                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">{row.dt}</dt>
+                <dd className="mt-1 font-display text-2xl text-ocean">{row.dd}</dd>
+              </div>
+            ))}
+          </dl>
         </Container>
       </section>
 
-      <section className="bg-ocean py-20 text-sand">
+      <section className="bg-sand py-16 md:py-24">
+        <Container className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div>
+            <Eyebrow>{locale === "es" ? "La casa" : "The house"}</Eyebrow>
+            <h2 className="mt-3 font-display text-4xl text-ocean md:text-5xl">
+              {locale === "es" ? "Jannat es la palabra para el paraíso." : "Jannat is the word for paradise."}
+            </h2>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-muted md:text-lg">{t(locale, villa.summary)}</p>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+              {villa.highlights.map((item) => (
+                <li key={item.en} className="border-l-2 border-jungle/40 pl-3 text-sm text-ocean">
+                  {t(locale, item)}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8">
+              <LocaleLink locale={locale} href="/stays/casa-jannat" className="text-sm font-semibold text-ocean underline underline-offset-4">
+                {locale === "es" ? "Fotos, recámaras y reglas" : "Photos, bedrooms, and rules"}
+              </LocaleLink>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {gallery.map((photo, index) => (
+              <div
+                key={photo.src}
+                className={`relative overflow-hidden rounded-3xl ${index === 0 ? "col-span-2 aspect-[16/10]" : "aspect-[4/3]"}`}
+              >
+                <Image src={photo.src} alt={t(locale, photo.alt)} fill className="object-cover" sizes="(min-width: 1024px) 28vw, 50vw" />
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-white py-16 md:py-20">
         <Container>
-          <Eyebrow light>{locale === "es" ? "Para qué vienes" : "What you came for"}</Eyebrow>
-          <h2 className="mt-3 font-display text-5xl">{locale === "es" ? "Planea la ocasión." : "Plan the occasion."}</h2>
+          <Eyebrow>{locale === "es" ? "En la casa" : "Inside the house"}</Eyebrow>
+          <h2 className="mt-3 max-w-2xl font-display text-4xl text-ocean md:text-5xl">
+            {locale === "es" ? "Lo esencial, sin ruido." : "The essentials, without the clutter."}
+          </h2>
+          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {villa.amenities.map((group) => (
+              <div key={group.category.en}>
+                <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-jungle">{t(locale, group.category)}</h3>
+                <ul className="mt-3 space-y-2 text-sm leading-relaxed text-ink/90">
+                  {group.items.map((item) => (
+                    <li key={item.en}>{t(locale, item)}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-ocean py-16 text-sand md:py-20">
+        <Container>
+          <Eyebrow light>Airbnb · {villa.rating.count}</Eyebrow>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            {villa.rating.score} {locale === "es" ? "de" : "from"} {villa.rating.count} {locale === "es" ? "estadías" : "stays"}
+          </h2>
+          <p className="mt-4 max-w-xl text-sand/80">
+            {locale === "es"
+              ? "Las notas son públicas en Airbnb. Aquí están las categorías, no citas inventadas."
+              : "The scores are public on Airbnb. These are the categories, not invented quotations."}
+          </p>
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {occasions.map((occasion) => (
-              <LocaleLink key={occasion.slug} locale={locale} href={`/occasions/${occasion.slug}`} className="group relative min-h-64 overflow-hidden rounded-3xl">
-                <Image src={occasion.photo} alt={t(locale, occasion.photoAlt)} fill className="object-cover transition duration-700 group-hover:scale-105" sizes="(min-width: 1024px) 30vw, 100vw" />
-                <span className="absolute inset-0 bg-gradient-to-t from-ocean-deep/85 to-ocean-deep/10" />
-                <span className="absolute inset-x-0 bottom-0 p-5">
-                  <span className="block text-xs uppercase tracking-[0.16em] text-gold">{t(locale, occasion.kicker)}</span>
-                  <span className="mt-1 block font-display text-4xl">{t(locale, occasion.title)}</span>
+            {villa.categories.map((category) => (
+              <p key={category.label.en} className="flex items-baseline justify-between gap-4 border-b border-white/15 pb-3 text-sm">
+                <span>{t(locale, category.label)}</span>
+                <span className="font-semibold text-gold">{category.score.toFixed(1)}</span>
+              </p>
+            ))}
+          </div>
+          <a href={site.airbnb} target="_blank" rel="noopener noreferrer" className="mt-8 inline-block text-sm underline underline-offset-4">
+            {locale === "es" ? "Leer las reseñas en Airbnb" : "Read the reviews on Airbnb"}
+          </a>
+        </Container>
+      </section>
+
+      <section className="bg-sand py-16 md:py-24">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <Eyebrow>{locale === "es" ? "Alrededor" : "Around the house"}</Eyebrow>
+              <h2 className="mt-3 font-display text-4xl text-ocean md:text-5xl">
+                {locale === "es" ? "Ideas para los días." : "Ideas for the days."}
+              </h2>
+              <p className="mt-3 max-w-xl text-muted">
+                {locale === "es"
+                  ? "Chef, pesca, traslados y tours — para organizar con tu anfitrión u operadores locales. Aquí no se reservan."
+                  : "Chef, fishing, transfers, and tours — arrange with your host or local operators. Not booked on this site."}
+              </p>
+            </div>
+            <LocaleLink locale={locale} href="/experiences" className="text-sm font-semibold text-ocean underline underline-offset-4">
+              {locale === "es" ? "Ver todas" : "See all"}
+            </LocaleLink>
+          </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((item) => (
+              <LocaleLink
+                key={item.slug}
+                locale={locale}
+                href={`/experiences/${item.slug}`}
+                className="group flex min-h-44 flex-col justify-between rounded-[1.6rem] bg-ocean p-6 text-sand transition hover:-translate-y-0.5"
+              >
+                <div>
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-gold">{t(locale, categoryLabel[item.category])}</p>
+                  <h3 className="mt-3 font-display text-3xl leading-none">{t(locale, item.title)}</h3>
+                  <p className="mt-3 text-sm text-sand/80">{t(locale, item.summary)}</p>
+                </div>
+                <span className="mt-6 text-sm opacity-80 group-hover:underline">
+                  {locale === "es" ? "Leer más" : "Read more"}
                 </span>
               </LocaleLink>
             ))}
@@ -135,189 +223,62 @@ export function HomePage({ locale }: { locale: Locale }) {
         </Container>
       </section>
 
-      <section className="py-20">
-        <Container>
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <Eyebrow>{locale === "es" ? "Alrededor de la casa" : "Around the house"}</Eyebrow>
-              <h2 className="mt-3 font-display text-5xl text-ocean">{locale === "es" ? "Experiencias que se suman al viaje." : "Experiences that join the trip."}</h2>
-            </div>
-            <LocaleLink locale={locale} href="/experiences" className="hidden text-sm underline md:inline">
-              {locale === "es" ? "Ver todas" : "See all"}
-            </LocaleLink>
-          </div>
-        </Container>
-        <div className="mt-8 flex gap-4 overflow-x-auto px-5 pb-4 md:px-8">
-          {featured.map((item) => (
-            <article key={item.slug} className="flex w-[280px] shrink-0 flex-col justify-between rounded-3xl bg-ocean p-5 text-sand">
-              <div>
-                <p className="text-[0.68rem] uppercase tracking-[0.16em] text-gold">{t(locale, categoryLabel[item.category])}</p>
-                <h3 className="mt-3 font-display text-3xl">
-                  <LocaleLink locale={locale} href={`/experiences/${item.slug}`}>
-                    {t(locale, item.title)}
-                  </LocaleLink>
-                </h3>
-                <p className="mt-3 text-sm text-sand/75">{t(locale, item.summary)}</p>
-              </div>
-              <div className="mt-6 flex items-center justify-between gap-2">
-                <p className="text-sm">
-                  {locale === "es" ? "Desde" : "From"} {formatMoney(experienceFromPrice(item), locale)}
-                  {experienceFromIsPerPerson(item) ? (locale === "es" ? " / persona" : " / person") : ""}
-                </p>
-                <QuickAdd locale={locale} slug={item.slug} />
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-sand-2 py-20">
-        <Container>
-          <Eyebrow>{locale === "es" ? "Paquetes" : "Packages"}</Eyebrow>
-          <h2 className="mt-3 max-w-xl font-display text-5xl text-ocean">{locale === "es" ? "Tres formas de no armarlo pieza por pieza." : "Three ways to skip assembling it piece by piece."}</h2>
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {packages.map((pkg) => {
-              const quote = quotePackage(pkg);
-              return (
-                <LocaleLink key={pkg.slug} locale={locale} href={`/packages/${pkg.slug}`} className="flex flex-col rounded-3xl bg-white p-6 shadow-card">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-coral-deep">
-                    {locale === "es" ? "Ahorras" : "Save"} {formatMoney(quote.discount, locale)}
-                  </p>
-                  <h3 className="mt-3 font-display text-3xl text-ocean">{t(locale, pkg.title)}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{t(locale, pkg.summary)}</p>
-                  <p className="mt-6 text-sm">
-                    {locale === "es" ? "Desde" : "From"} {formatMoney(quote.total, locale)} · {pkg.nights} {locale === "es" ? "noches" : "nights"}
-                  </p>
-                </LocaleLink>
-              );
-            })}
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-20">
-        <Container className="grid gap-8 md:grid-cols-3">
-          {[
-            {
-              n: "01",
-              title: locale === "es" ? "Elige la casa" : "Pick the house",
-              body: locale === "es" ? "Fechas, huéspedes y la ocasión. El precio se arma de la misma tabla en todas partes." : "Dates, guests, and the occasion. The price is built from the same table everywhere.",
-            },
-            {
-              n: "02",
-              title: locale === "es" ? "Suma los días" : "Add the days",
-              body: locale === "es" ? "Chef, bote, traslado, lo que sea. Cada uno guarda fecha, hora y tamaño del grupo." : "Chef, boat, transfer, whichever. Each one keeps a date, a time, and a group size.",
-            },
-            {
-              n: "03",
-              title: locale === "es" ? "Llega" : "Arrive",
-              body: locale === "es" ? "Confirmamos el calendario, mandamos el pago y la caja de seguridad te espera." : "We confirm the calendar, send payment, and the lockbox is waiting.",
-            },
-          ].map((step) => (
-            <div key={step.n}>
-              <p className="font-display text-5xl text-jungle">{step.n}</p>
-              <h3 className="mt-3 font-display text-3xl text-ocean">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
-            </div>
-          ))}
-        </Container>
-      </section>
-
-      <section className="bg-white py-20">
-        <Container>
-          <Eyebrow>Airbnb · {villa.rating.count}</Eyebrow>
-          <h2 className="mt-3 font-display text-5xl text-ocean">
-            {villa.rating.score} <span className="text-3xl text-muted">{locale === "es" ? "de 49 estadías" : "from 49 stays"}</span>
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm text-muted">
-            {locale === "es"
-              ? "Las notas son públicas en Airbnb. Aquí están las categorías, no citas inventadas."
-              : "The scores are public on Airbnb. These are the categories, not invented quotations."}
-          </p>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {villa.categories.map((category) => (
-              <div key={category.label.en}>
-                <div className="flex justify-between text-sm">
-                  <span>{t(locale, category.label)}</span>
-                  <span>{category.score.toFixed(1)}</span>
-                </div>
-                <div className="mt-2 h-1 rounded-full bg-sand-2">
-                  <div className="h-1 rounded-full bg-ocean" style={{ width: `${(category.score / 5) * 100}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {villa.themes.map((theme) => (
-              <p key={theme.en} className="rounded-3xl bg-sand p-5 text-sm leading-relaxed">
-                {t(locale, theme)}
-              </p>
-            ))}
-          </div>
-          <a href="https://www.airbnb.com/rooms/1310243367711997885" className="mt-6 inline-block text-sm underline">
-            {locale === "es" ? "Leer las reseñas en Airbnb" : "Read the reviews on Airbnb"}
-          </a>
-        </Container>
-      </section>
-
-      <section className="py-20">
-        <Container className="grid gap-10 lg:grid-cols-2">
+      <section className="bg-white py-16 md:py-20">
+        <Container className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
           <div>
             <Eyebrow>Jacó</Eyebrow>
-            <h2 className="mt-3 font-display text-5xl text-ocean">{locale === "es" ? "El pueblo, a la distancia justa." : "The town, at the right distance."}</h2>
-            <ul className="mt-6 divide-y divide-line">
+            <h2 className="mt-3 font-display text-4xl text-ocean md:text-5xl">
+              {locale === "es" ? "El pueblo, a la distancia justa." : "The town, at the right distance."}
+            </h2>
+            <ul className="mt-8 space-y-4">
               {villa.nearby.map((place) => (
-                <li key={place.name.en} className="flex items-baseline justify-between gap-4 py-3">
-                  <span className="font-medium">{t(locale, place.name)}</span>
-                  <span className="text-right text-sm text-muted">{t(locale, place.detail)}</span>
+                <li key={place.name.en} className="border-b border-line pb-4">
+                  <p className="font-medium text-ocean">{t(locale, place.name)}</p>
+                  <p className="mt-1 text-sm text-muted">{t(locale, place.detail)}</p>
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-xs text-muted">
-              {locale === "es"
-                ? "El mapa marca el barrio. La dirección llega con la confirmación."
-                : "The map marks the neighborhood. The address arrives with confirmation."}
-            </p>
+            <LocaleLink locale={locale} href="/guide" className="mt-6 inline-block text-sm font-semibold text-ocean underline underline-offset-4">
+              {locale === "es" ? "Guía de Jacó" : "Jacó guide"}
+            </LocaleLink>
           </div>
           <iframe
-            title={locale === "es" ? "Mapa aproximado de Jacó" : "Approximate map of Jacó"}
-            className="min-h-80 w-full rounded-3xl border-0"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-84.655%2C9.595%2C-84.600%2C9.640&layer=mapnik&marker=9.616%2C-84.629"
+            title={locale === "es" ? "Ubicación aproximada en Jacó" : "Approximate location in Jacó"}
+            className="h-80 w-full rounded-[1.6rem] border-0 lg:h-full lg:min-h-[28rem]"
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            src={`https://www.openstreetmap.org/export/embed.html?bbox=-84.655%2C9.595%2C-84.600%2C9.640&layer=mapnik&marker=${site.map.lat}%2C${site.map.lng}`}
           />
         </Container>
       </section>
 
-      <section className="pb-20">
-        <Container>
-          <h2 className="font-display text-4xl text-ocean">{locale === "es" ? "La casa, de cerca" : "The house, up close"}</h2>
-          <div className="mt-6 grid grid-cols-2 gap-2 md:grid-cols-4">
-            {photos.slice(0, 4).map((photo) => (
-              <LocaleLink key={photo.src} locale={locale} href="/stays/casa-jannat" aria-label={t(locale, photo.alt)} className="relative aspect-[3/4] overflow-hidden rounded-2xl">
-                <Image src={photo.src} alt={t(locale, photo.alt)} fill className="object-cover" sizes="25vw" />
-              </LocaleLink>
-            ))}
-          </div>
+      <section className="relative overflow-hidden py-20 text-sand md:py-28">
+        <Image src={homeHero.src} alt={t(locale, homeHero.alt)} fill className="object-cover" sizes="100vw" />
+        <div className="absolute inset-0 bg-ocean-deep/65" />
+        <Container className="relative max-w-2xl">
+          <Eyebrow light>{locale === "es" ? "Tu semana" : "Your week"}</Eyebrow>
+          <h2 className="mt-3 font-display text-4xl md:text-6xl">
+            {locale === "es" ? "El Pacífico a un corto paseo. La piscina es tuya." : "The Pacific is a short walk. The pool is yours."}
+          </h2>
+          <p className="mt-4 text-sand/85">
+            {locale === "es"
+              ? "Reservá Casa Jannat en Airbnb. La reserva directa desde este sitio llega pronto."
+              : "Book Casa Jannat on Airbnb. Direct booking from this site is coming soon."}
+          </p>
+          <AirbnbCta locale={locale} size="lg" variant="light" className="mt-8" showNote={false} />
+          <p className="mt-8 text-sm text-sand/75">
+            {locale === "es"
+              ? "Dejá un correo y te escribimos cuando una semana esté abierta."
+              : "Leave an email and we will write when a week is open."}
+          </p>
+          <Newsletter locale={locale} />
+          <LocaleLink locale={locale} href="/contact" className="mt-4 inline-block text-sm underline underline-offset-4">
+            {locale === "es" ? "O escribe directo" : "Or write directly"}
+          </LocaleLink>
         </Container>
       </section>
 
-      <section className="relative min-h-[70vh] text-sand">
-        <Image src={homeHero.src} alt="" fill className="object-cover object-center" sizes="100vw" quality={90} />
-        <div className="absolute inset-0 bg-ocean-deep/65" />
-        <Container className="relative py-24">
-          <h2 className="max-w-2xl font-display text-5xl leading-tight md:text-6xl">
-            {locale === "es" ? "El Pacífico queda a un corto paseo. La piscina es tuya." : "The Pacific is a short walk. The pool is yours."}
-          </h2>
-          <p className="mt-4 max-w-lg text-sand/80">
-            {locale === "es"
-              ? "Deja el correo y te escribimos cuando haya una semana abierta — y el traslado de llegada en una reserva directa."
-              : "Leave an email and we will write when a week is open — and about the airport ride on a direct booking."}
-          </p>
-          <Newsletter locale={locale} />
-          <Link href={locale === "es" ? "/es/contact" : "/contact"} className="mt-4 inline-block text-sm underline">
-            {locale === "es" ? "O escribe directo" : "Or write directly"}
-          </Link>
-        </Container>
-      </section>
+      <SeenStayEmbed locale={locale} />
     </>
   );
 }

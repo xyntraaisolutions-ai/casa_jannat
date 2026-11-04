@@ -10,7 +10,10 @@ export async function generateMetadata() {
     locale,
     path: "/contact",
     title: locale === "es" ? "Contacto" : "Contact",
-    description: locale === "es" ? "Escribe por la casa, una fecha o un plan." : "Write about the house, a date, or a plan.",
+    description:
+      locale === "es"
+        ? "Preguntas sobre Casa Jannat. Las reservas se hacen en Airbnb."
+        : "Questions about Casa Jannat. Bookings are made on Airbnb.",
   });
 }
 
@@ -24,7 +27,14 @@ export default async function ContactPage() {
           <h1 className="font-display text-5xl text-ocean">{locale === "es" ? "Escribe. Responde una persona." : "Write. A person answers."}</h1>
           <ul className="mt-6 space-y-3 text-sm">
             <li>
-              <a className="underline" href={`mailto:${site.email}`}>{site.email}</a>
+              <a
+                className="underline"
+                href={`mailto:${site.email}?subject=${encodeURIComponent("Casa Jannat")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {site.email}
+              </a>
             </li>
             {site.phoneDisplay && site.phoneTel ? (
               <li>
@@ -33,7 +43,12 @@ export default async function ContactPage() {
             ) : null}
             <li>Jacó, Puntarenas, Costa Rica</li>
           </ul>
-          <a href={hostHref(hello)} className="mt-6 inline-flex rounded-full bg-jungle px-5 py-3 text-sm font-semibold text-white">
+          <a
+            href={hostHref(hello)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex rounded-full bg-jungle px-5 py-3 text-sm font-semibold text-white"
+          >
             {hostAction(locale)}
           </a>
         </div>

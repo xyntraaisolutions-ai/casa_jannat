@@ -8,11 +8,11 @@ export async function generateMetadata() {
   return buildMetadata({
     locale,
     path: "/experiences",
-    title: locale === "es" ? "Experiencias" : "Experiences",
+    title: locale === "es" ? "Qué hacer en Jacó" : "Things to do in Jacó",
     description:
       locale === "es"
-        ? "Chef, traslados, pesca, parques y la noche en Jacó, con el mismo precio en cada página."
-        : "Chef, transfers, fishing, parks, and the evening in Jacó, with the same price on every page.",
+        ? "Ideas alrededor de Casa Jannat: chef, traslados, pesca y tours. Se coordinan aparte; no se reservan en este sitio."
+        : "Ideas around Casa Jannat: chef, transfers, fishing, and tours. Arranged separately; not booked on this site.",
   });
 }
 
@@ -21,14 +21,14 @@ export default async function ExperiencesPage() {
   return (
     <PageMain className="pb-24">
       <Container>
-        <Eyebrow>{locale === "es" ? "Catálogo" : "Catalog"}</Eyebrow>
+        <Eyebrow>{locale === "es" ? "Alrededor de la casa" : "Around the house"}</Eyebrow>
         <h1 className="mt-3 max-w-3xl font-display text-5xl text-ocean md:text-6xl">
-          {locale === "es" ? "Lo que se suma a la casa." : "What gets added to the house."}
+          {locale === "es" ? "Ideas para los días en Jacó." : "Ideas for the days in Jacó."}
         </h1>
         <p className="mt-4 max-w-2xl text-muted">
           {locale === "es"
-            ? "Servicios en la villa y tours desde Jacó. El precio de cada opción es el precio del desglose. Nada está escrito a mano en otra tabla."
-            : "Services at the villa and tours out of Jacó. Each option's price is the price in the breakdown. Nothing is retyped in a second table."}
+            ? "Servicios en la villa y tours desde el pueblo. Se organizan con el anfitrión u operadores locales — este sitio no toma reservas de experiencias."
+            : "Services at the villa and tours out of town. Arrange with the host or local operators — this site does not take experience bookings."}
         </p>
         <div className="mt-10">
           <ExperienceBrowser locale={locale} />

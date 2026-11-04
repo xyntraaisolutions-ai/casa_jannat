@@ -1,103 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { categoryLabel, experienceFromIsPerPerson, experienceFromPrice, experiences, type ExpCategory } from "@/content/experiences";
-import { photos, villa } from "@/content/villa";
-import { ArchMark } from "./Logo";
-import { formatMoney } from "@/lib/dates";
+import { categoryLabel, experiences, type ExpCategory } from "@/content/experiences";
 import { localizeHref, t, type Locale } from "@/lib/copy";
-import { rates } from "@/lib/rates";
-
-export function StaysBrowser({ locale }: { locale: Locale }) {
-  const [guests, setGuests] = useState(2);
-  const [pool, setPool] = useState(false);
-  const [walk, setWalk] = useState(false);
-  const [party, setParty] = useState(false);
-  const [map, setMap] = useState(false);
-
-  const matches =
-    guests <= villa.maxGuests &&
-    (!pool || villa.pool) &&
-    (!walk || villa.walkToBeach) &&
-    (!party || villa.celebrations);
-
-  return (
-    <div>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div className="flex flex-wrap gap-2">
-          <label className="rounded-full bg-white px-3 py-2 text-sm">
-            {locale === "es" ? "Huéspedes" : "Guests"}
-            <input
-              type="number"
-              min={1}
-              max={12}
-              value={guests}
-              onChange={(event) => setGuests(Number(event.target.value))}
-              className="ml-2 w-12 bg-transparent"
-            />
-          </label>
-          <Filter on={pool} onClick={() => setPool((value) => !value)} label={locale === "es" ? "Piscina" : "Pool"} />
-          <Filter on={walk} onClick={() => setWalk((value) => !value)} label={locale === "es" ? "A pie a la playa" : "Walk to the beach"} />
-          <Filter on={party} onClick={() => setParty((value) => !value)} label={locale === "es" ? "Celebraciones" : "Celebrations"} />
-        </div>
-        <div className="flex rounded-full bg-white p-1 text-sm">
-          <button type="button" className={`rounded-full px-3 py-1 ${!map ? "bg-ocean text-sand" : ""}`} onClick={() => setMap(false)}>
-            {locale === "es" ? "Lista" : "List"}
-          </button>
-          <button type="button" className={`rounded-full px-3 py-1 ${map ? "bg-ocean text-sand" : ""}`} onClick={() => setMap(true)}>
-            {locale === "es" ? "Mapa" : "Map"}
-          </button>
-        </div>
-      </div>
-      {matches ? (
-        <div className={`mt-8 grid gap-6 ${map ? "lg:grid-cols-2" : ""}`}>
-          <Link href={localizeHref(locale, "/stays/casa-jannat")} className="group overflow-hidden rounded-3xl bg-white shadow-card">
-            <div className="relative h-72">
-              <Image src="/images/casa-jannat/hero-pool.jpg" alt={t(locale, photos[0].alt)} fill className="object-cover transition duration-700 group-hover:scale-105" sizes="(min-width: 1024px) 50vw, 100vw" />
-            </div>
-            <div className="p-5 sm:p-6">
-              <div className="flex items-center gap-4">
-                <ArchMark className="h-16 w-12 shrink-0 sm:h-20 sm:w-[3.8rem]" />
-                <div className="min-w-0">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-jungle">Jacó</p>
-                  <h2 className="mt-1 font-display text-3xl leading-none text-ocean sm:text-4xl">Casa Jannat</h2>
-                </div>
-              </div>
-              <p className="mt-4 text-muted">{t(locale, villa.summary)}</p>
-              <p className="mt-4 text-sm">
-                {villa.maxGuests} {locale === "es" ? "huéspedes" : "guests"} · {villa.bedrooms} {locale === "es" ? "recámaras" : "bedrooms"} · {villa.bathrooms} {locale === "es" ? "baños" : "baths"}
-              </p>
-              <p className="mt-2 font-medium">{locale === "es" ? "Desde" : "From"} {formatMoney(rates.green, locale)} {locale === "es" ? "/ noche" : "/ night"}</p>
-            </div>
-          </Link>
-          {map ? (
-            <iframe
-              title={locale === "es" ? "Ubicación aproximada de Casa Jannat en Jacó" : "Approximate location of Casa Jannat in Jacó"}
-              className="h-full min-h-80 w-full rounded-3xl border-0"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-84.655%2C9.595%2C-84.600%2C9.640&layer=mapnik&marker=9.616%2C-84.629"
-            />
-          ) : null}
-        </div>
-      ) : (
-        <p className="mt-10 max-w-xl text-lg">
-          {locale === "es"
-            ? "Casa Jannat duerme 8, con piscina y la playa a un corto paseo. Si el grupo es más grande, escríbenos y te decimos qué cabe."
-            : "Casa Jannat sleeps 8, with a pool and the beach a short walk away. If the group is larger, write and we will say what fits."}
-        </p>
-      )}
-    </div>
-  );
-}
-
-function Filter({ on, onClick, label }: { on: boolean; onClick: () => void; label: string }) {
-  return (
-    <button type="button" onClick={onClick} aria-pressed={on} className={`rounded-full px-3 py-2 text-sm ${on ? "bg-ocean text-sand" : "bg-white"}`}>
-      {label}
-    </button>
-  );
-}
 
 export function ExperienceBrowser({ locale }: { locale: Locale }) {
   const [kind, setKind] = useState<"all" | "service" | "tour">("all");
@@ -152,9 +58,8 @@ export function ExperienceBrowser({ locale }: { locale: Locale }) {
               <h2 className="mt-3 font-display text-3xl">{t(locale, item.title)}</h2>
               <p className="mt-3 text-sm text-sand/80">{t(locale, item.summary)}</p>
             </div>
-            <p className="mt-6 text-sm">
-              {locale === "es" ? "Desde" : "From"} {formatMoney(experienceFromPrice(item), locale)}
-              {experienceFromIsPerPerson(item) ? (locale === "es" ? " / persona" : " / person") : ""}
+            <p className="mt-6 text-sm text-sand/70">
+              {t(locale, item.duration)} · {locale === "es" ? "Informativo" : "Informational"}
             </p>
           </Link>
         ))}

@@ -19,12 +19,12 @@ export const homeHero = {
 };
 
 export const jacoView = {
-  src: "/images/casa-jannat/jaco-hills-view.jpg",
-  width: 2560,
-  height: 1440,
+  src: "/images/casa-jannat/jaco-aerial.jpg",
+  width: 1024,
+  height: 712,
   alt: c(
-    "Playa Jacó from the hills, a long curve of sand and Pacific surf",
-    "Playa Jacó desde los cerros, una curva larga de arena y oleaje del Pacífico",
+    "Aerial view of Jacó’s sandy beach, turquoise surf, and the green headland",
+    "Vista aérea de la playa de arena de Jacó, el oleaje turquesa y el cerro verde",
   ),
 };
 

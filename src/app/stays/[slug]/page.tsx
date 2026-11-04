@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { BookingCard } from "@/components/BookingCard";
+import { AirbnbCta, AirbnbStickyBar } from "@/components/AirbnbCta";
 import { CasaBanner } from "@/components/Logo";
 import { Gallery } from "@/components/Gallery";
 import { JsonLd } from "@/components/JsonLd";
@@ -8,13 +8,13 @@ import { Container, Crumbs, LocaleLink, PageMain } from "@/components/ui";
 import { getExperience } from "@/content/experiences";
 import { photos, roomLabels, villa } from "@/content/villa";
 import { t } from "@/lib/copy";
-import { formatMoney, formatTime } from "@/lib/dates";
+import { formatTime } from "@/lib/dates";
 import { getLocale } from "@/lib/locale";
-import { rates } from "@/lib/rates";
+import { breadcrumbSchema, vacationRentalSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-const upsells = ["private-chef", "bartender", "dj", "airport-transfer", "grocery-prestock"];
+const ideas = ["private-chef", "bartender", "dj", "airport-transfer", "grocery-prestock"];
 
 export function generateStaticParams() {
   return [{ slug: villa.slug }];
@@ -32,42 +32,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
 }
 
-export default async function VillaPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
+export default async function VillaPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   if (slug !== villa.slug) notFound();
   const locale = await getLocale();
-  const query = await searchParams;
-  const read = (key: string) => (typeof query[key] === "string" ? query[key] : "");
-  const guests = Number(read("guests")) || 2;
 
   return (
     <PageMain className="pb-28">
+      <JsonLd data={vacationRentalSchema()} />
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "VacationRental",
-          name: "Casa Jannat",
-          description: villa.summary.en,
-          image: photos.map((photo) => `${site.url}${photo.src}`),
-          address: { "@type": "PostalAddress", addressLocality: "Jacó", addressRegion: "Puntarenas", addressCountry: "CR" },
-          containsPlace: villa.bedroomsDetail.map((room) => ({
-            "@type": "Accommodation",
-            name: room.name.en,
-            bed: room.bed.en,
-          })),
-        }}
+        data={breadcrumbSchema([
+          { name: locale === "es" ? "Inicio" : "Home", path: "/" },
+          { name: "Casa Jannat", path: "/stays/casa-jannat" },
+        ])}
       />
       <Container>
         <Crumbs
           items={[
             { href: "/", label: locale === "es" ? "Inicio" : "Home", locale },
-            { href: "/stays", label: locale === "es" ? "La casa" : "The house", locale },
             { label: "Casa Jannat", locale },
           ]}
         />
@@ -136,25 +118,37 @@ export default async function VillaPage({
             ))}
           </div>
           <p className="mt-3 text-xs text-muted">
-            {photos.map((photo) => t(locale, roomLabels[photo.room])).filter((value, index, list) => list.indexOf(value) === index).join(" · ")}
+            {photos
+              .map((photo) => t(locale, roomLabels[photo.room]))
+              .filter((value, index, list) => list.indexOf(value) === index)
+              .join(" · ")}
           </p>
           <h2 className="mt-12 font-display text-4xl text-ocean">{locale === "es" ? "Reglas, en corto" : "Rules, briefly"}</h2>
           <ul className="mt-4 space-y-2 text-sm leading-relaxed">
-            <li>{locale === "es" ? `Entrada ${formatTime(site.checkIn, locale)}. Salida ${formatTime(site.checkOut, locale)}.` : `Check-in ${formatTime(site.checkIn, locale)}. Checkout ${formatTime(site.checkOut, locale)}.`}</li>
+            <li>
+              {locale === "es"
+                ? `Entrada ${formatTime(site.checkIn, locale)}. Salida ${formatTime(site.checkOut, locale)}.`
+                : `Check-in ${formatTime(site.checkIn, locale)}. Checkout ${formatTime(site.checkOut, locale)}.`}
+            </li>
             <li>{locale === "es" ? "Silencio de 10:00 p.m. a 8:00 a.m." : "Quiet hours 10:00 p.m. to 8:00 a.m."}</li>
             <li>{locale === "es" ? "Sin vidrio en la piscina." : "No glass at the pool."}</li>
             <li>
               {locale === "es"
-                ? `Depósito de seguridad reembolsable de ${formatMoney(rates.securityDeposit, locale)}.`
-                : `Refundable security deposit of ${formatMoney(rates.securityDeposit, locale)}.`}
+                ? "Depósito de seguridad y tarifas actuales: ver el anuncio de Airbnb."
+                : "Security deposit and live rates: see the Airbnb listing."}
             </li>
           </ul>
           <LocaleLink locale={locale} href="/policies/house-rules" className="mt-3 inline-block text-sm underline">
             {locale === "es" ? "Reglas completas" : "Full house rules"}
           </LocaleLink>
-          <h2 className="mt-12 font-display text-4xl text-ocean">{locale === "es" ? "Hazlo inolvidable" : "Make it a particular week"}</h2>
+          <h2 className="mt-12 font-display text-4xl text-ocean">{locale === "es" ? "Ideas para la semana" : "Ideas for the week"}</h2>
+          <p className="mt-3 text-sm text-muted">
+            {locale === "es"
+              ? "Se coordinan con el anfitrión u operadores locales — no se reservan aquí."
+              : "Arrange with the host or local operators — not booked on this site."}
+          </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {upsells.map((slug) => {
+            {ideas.map((slug) => {
               const experience = getExperience(slug);
               if (!experience) return null;
               return (
@@ -177,7 +171,9 @@ export default async function VillaPage({
           <iframe
             title={locale === "es" ? "Ubicación aproximada en Jacó" : "Approximate location in Jacó"}
             className="mt-4 h-72 w-full rounded-3xl border-0"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-84.655%2C9.595%2C-84.600%2C9.640&layer=mapnik&marker=9.616%2C-84.629"
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            src={`https://www.openstreetmap.org/export/embed.html?bbox=-84.655%2C9.595%2C-84.600%2C9.640&layer=mapnik&marker=${site.map.lat}%2C${site.map.lng}`}
           />
           <h2 className="mt-12 font-display text-4xl text-ocean">
             {villa.rating.score} · {villa.rating.count} {locale === "es" ? "reseñas" : "reviews"}
@@ -190,29 +186,34 @@ export default async function VillaPage({
               </p>
             ))}
           </div>
-          <a className="mt-4 inline-block text-sm underline" href={site.airbnb}>
-            {locale === "es" ? "También en Airbnb" : "Also on Airbnb"}
+          <a className="mt-4 inline-block text-sm underline" href={site.airbnb} target="_blank" rel="noopener noreferrer">
+            {locale === "es" ? "Ver en Airbnb" : "See on Airbnb"}
           </a>
         </div>
-        <div className="lg:sticky lg:top-40 lg:self-start">
-          <BookingCard
-            locale={locale}
-            initialCheckIn={read("checkIn")}
-            initialCheckOut={read("checkOut")}
-            initialGuests={guests}
-            initialOccasion={read("occasion")}
-          />
-        </div>
+        <aside className="lg:sticky lg:top-40 lg:self-start">
+          <div className="rounded-[1.6rem] bg-white p-6 shadow-card ring-1 ring-ocean/10">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-jungle">
+              {locale === "es" ? "Reservar" : "Book"}
+            </p>
+            <h2 className="mt-2 font-display text-3xl text-ocean">Casa Jannat</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              {locale === "es"
+                ? "Las fechas, tarifas y disponibilidad viven en Airbnb. La reserva directa desde este sitio llega pronto."
+                : "Dates, rates, and availability live on Airbnb. Direct booking from this site is coming soon."}
+            </p>
+            <AirbnbCta locale={locale} className="mt-6" size="lg" />
+            <a
+              href={`mailto:${site.email}?subject=${encodeURIComponent("Casa Jannat")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 block text-center text-sm text-ocean underline underline-offset-4"
+            >
+              {locale === "es" ? "Preguntas por correo" : "Questions by email"}
+            </a>
+          </div>
+        </aside>
       </Container>
-      <div className="mobile-dock fixed inset-x-0 bottom-0 z-20 flex items-center justify-between border-t border-line bg-sand/95 px-4 py-3 pr-40 backdrop-blur md:hidden">
-        <p className="text-sm">
-          <span className="font-semibold">{formatMoney(rates.green, locale)}</span>
-          <span className="text-muted"> {locale === "es" ? "/ noche" : "/ night"}</span>
-        </p>
-        <a href="#reserve" className="rounded-full bg-coral-deep px-4 py-2 text-sm font-semibold text-white">
-          {locale === "es" ? "Ver fechas" : "Check dates"}
-        </a>
-      </div>
+      <AirbnbStickyBar locale={locale} />
     </PageMain>
   );
 }

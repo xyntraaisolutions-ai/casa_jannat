@@ -1,36 +1,29 @@
 import { notFound } from "next/navigation";
-import { ExperienceBooker } from "@/components/ExperienceBooker";
+import { AirbnbCta } from "@/components/AirbnbCta";
 import { JsonLd } from "@/components/JsonLd";
 import { Container, Crumbs, Eyebrow, LocaleLink, PageMain } from "@/components/ui";
-import {
-  categoryLabel,
-  experienceFromPrice,
-  experiences,
-  getExperience,
-  type Experience,
-} from "@/content/experiences";
+import { categoryLabel, experiences, getExperience, type Experience } from "@/content/experiences";
 import { t, type Copy, type Locale } from "@/lib/copy";
-import { formatMoney, formatTime } from "@/lib/dates";
 import { getLocale } from "@/lib/locale";
 import { buildMetadata } from "@/lib/seo";
-import { hostAction, hostHref } from "@/lib/site";
+import { hostAction, hostHref, site } from "@/lib/site";
 
 function policyCopy(kind: Experience["policy"], locale: Locale): string {
-  const standard =
+  const base =
     locale === "es"
-      ? "Puedes cancelar o mover esta experiencia hasta 72 horas antes, con reembolso de esa línea. Dentro de las 72 horas, se debe, salvo que el operador cancele."
-      : "You can cancel or move this experience until 72 hours before, and that line is refunded. Inside 72 hours it is due, unless the operator cancels.";
+      ? "Las condiciones las confirma el operador al coordinar el día."
+      : "Terms are confirmed with the operator when you arrange the day.";
   const weather =
     locale === "es"
-      ? " Si el mar, el clima o el parque cierran el día, se mueve o se reembolsa."
-      : " If the ocean, the weather, or the park closes the day, it is moved or refunded.";
+      ? " Si el mar, el clima o el parque cierran el día, suele moverse o reembolsarse."
+      : " If the ocean, weather, or park closes the day, it is usually moved or refunded.";
   const active =
     locale === "es"
-      ? " Pide una condición física razonable. Cuéntanos de lesiones, embarazo o límites de edad al sumarla y confirmamos si puedes ir."
-      : " It asks for a reasonable level of fitness. Tell us about injuries, pregnancy, or age limits when you add it, and we will confirm you can go.";
-  if (kind === "active") return standard + weather + active;
-  if (kind === "weather") return standard + weather;
-  return standard;
+      ? " Pide una condición física razonable; comenta lesiones o límites de edad al preguntar."
+      : " It asks for a reasonable level of fitness; mention injuries or age limits when you inquire.";
+  if (kind === "active") return base + weather + active;
+  if (kind === "weather") return base + weather;
+  return base;
 }
 
 export function generateStaticParams() {
@@ -62,15 +55,9 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "Service",
+          "@type": "TouristAttraction",
           name: experience.title.en,
           description: experience.summary.en,
-          offers: experience.options.map((option) => ({
-            "@type": "Offer",
-            name: option.label.en,
-            price: option.price,
-            priceCurrency: "USD",
-          })),
         }}
       />
       <section className="bg-ocean text-sand">
@@ -84,10 +71,6 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
               <dd>{t(locale, experience.duration)}</dd>
             </div>
             <div>
-              <dt className="text-gold">{locale === "es" ? "Desde" : "From"}</dt>
-              <dd>{formatMoney(experienceFromPrice(experience), locale)}</dd>
-            </div>
-            <div>
               <dt className="text-gold">{locale === "es" ? "Encuentro" : "Meeting"}</dt>
               <dd>{t(locale, experience.meeting)}</dd>
             </div>
@@ -99,7 +82,7 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
           <Crumbs
             items={[
               { href: "/", label: locale === "es" ? "Inicio" : "Home", locale },
-              { href: "/experiences", label: locale === "es" ? "Experiencias" : "Experiences", locale },
+              { href: "/experiences", label: locale === "es" ? "Qué hacer" : "Things to do", locale },
               { label: t(locale, experience.title), locale },
             ]}
           />
@@ -118,41 +101,16 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
             <List title={locale === "es" ? "No incluye" : "Not included"} items={experience.excludes} locale={locale} />
             <List title={locale === "es" ? "Lleva" : "Bring"} items={experience.bring} locale={locale} />
           </div>
-          <h2 className="mt-10 font-display text-3xl text-ocean">{locale === "es" ? "Precios" : "Prices"}</h2>
-          <table className="mt-4 w-full text-left text-sm">
-            <thead className="text-muted">
-              <tr>
-                <th className="py-2 font-medium">{locale === "es" ? "Opción" : "Option"}</th>
-                <th className="py-2 font-medium">{locale === "es" ? "Grupo" : "Group"}</th>
-                <th className="py-2 font-medium">{locale === "es" ? "Precio" : "Price"}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {experience.options.map((option) => (
-                <tr key={option.id} className="border-t border-line">
-                  <td className="py-3">{t(locale, option.label)}</td>
-                  <td className="py-3">
-                    {option.groupMin === option.groupMax ? option.groupMin : `${option.groupMin}–${option.groupMax}`}
-                  </td>
-                  <td className="py-3">
-                    {formatMoney(option.price, locale)}
-                    {option.basis === "person" ? (locale === "es" ? " / persona" : " / person") : ""}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="mt-3 text-xs text-muted">
-            {experience.timeSlots.map((slot) => formatTime(slot, locale)).join(" · ")}
+          <h2 className="mt-10 font-display text-3xl text-ocean">{locale === "es" ? "Cómo organizarlo" : "How to arrange it"}</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted">
+            {locale === "es"
+              ? "Esta página es informativa. Precios y disponibilidad se confirman con el anfitrión o el operador local — no se reservan en este sitio."
+              : "This page is informational. Prices and availability are confirmed with the host or a local operator — not booked on this site."}
           </p>
-          <h2 className="mt-10 font-display text-3xl text-ocean">{locale === "es" ? "Política" : "Policy"}</h2>
           <p className="mt-3 text-sm leading-relaxed">{policyCopy(experience.policy, locale)}</p>
-          <LocaleLink locale={locale} href="/policies/cancellation" className="mt-2 inline-block text-sm underline">
-            {locale === "es" ? "Cancelación completa" : "Full cancellation policy"}
-          </LocaleLink>
           {related.length ? (
             <>
-              <h2 className="mt-10 font-display text-3xl text-ocean">{locale === "es" ? "Combina bien con" : "Pairs well with"}</h2>
+              <h2 className="mt-10 font-display text-3xl text-ocean">{locale === "es" ? "También te puede interesar" : "You may also like"}</h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {related.map((item) =>
                   item ? (
@@ -167,13 +125,34 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
           ) : null}
         </div>
         <div className="space-y-4 lg:sticky lg:top-40 lg:self-start">
-          <ExperienceBooker locale={locale} experience={experience} />
-          <a
-            href={hostHref(`${locale === "es" ? "Pregunta sobre" : "Question about"} ${experience.title.en}`, experience.title.en)}
-            className="block rounded-full border border-ocean px-4 py-3 text-center text-sm font-semibold"
-          >
-            {hostAction(locale)}
-          </a>
+          <div className="rounded-[1.6rem] bg-white p-6 shadow-card ring-1 ring-ocean/10">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-jungle">
+              {locale === "es" ? "Informativo" : "Informational"}
+            </p>
+            <h2 className="mt-2 font-display text-3xl text-ocean">{t(locale, experience.title)}</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              {locale === "es"
+                ? "Primero reserva la casa en Airbnb. Luego escribe si quieres sumar esta idea a la semana."
+                : "Book the house on Airbnb first. Then write if you want this idea added to the week."}
+            </p>
+            <AirbnbCta locale={locale} className="mt-5" />
+            <a
+              href={hostHref(`${locale === "es" ? "Pregunta sobre" : "Question about"} ${experience.title.en}`, experience.title.en)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 block rounded-full border border-ocean px-4 py-3 text-center text-sm font-semibold"
+            >
+              {hostAction(locale)}
+            </a>
+            <a
+              href={`mailto:${site.email}?subject=${encodeURIComponent("Casa Jannat")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 block text-center text-xs text-muted underline"
+            >
+              {site.email}
+            </a>
+          </div>
         </div>
       </Container>
     </PageMain>

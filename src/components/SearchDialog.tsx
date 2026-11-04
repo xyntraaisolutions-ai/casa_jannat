@@ -4,8 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { localizeHref, t, type Locale } from "@/lib/copy";
 import { experiences } from "@/content/experiences";
-import { occasions } from "@/content/occasions";
-import { packages } from "@/content/packages";
 import { posts } from "@/content/posts";
 import { faqs } from "@/content/faqs";
 
@@ -31,9 +29,7 @@ export function SearchDialog({ locale, onClose }: { locale: Locale; onClose: () 
     const needle = query.trim().toLowerCase();
     const pages = [
       { href: "/stays/casa-jannat", title: "Casa Jannat", kind: locale === "es" ? "Casa" : "House" },
-      { href: "/experiences", title: locale === "es" ? "Experiencias" : "Experiences", kind: locale === "es" ? "Página" : "Page" },
-      { href: "/packages", title: locale === "es" ? "Paquetes" : "Packages", kind: locale === "es" ? "Página" : "Page" },
-      { href: "/plan-my-trip", title: locale === "es" ? "Planear mi viaje" : "Plan my trip", kind: locale === "es" ? "Página" : "Page" },
+      { href: "/experiences", title: locale === "es" ? "Qué hacer" : "Things to do", kind: locale === "es" ? "Página" : "Page" },
       { href: "/guide", title: locale === "es" ? "Guía de Jacó" : "Jacó guide", kind: locale === "es" ? "Página" : "Page" },
       { href: "/faq", title: "FAQ", kind: locale === "es" ? "Página" : "Page" },
       { href: "/about", title: locale === "es" ? "La historia" : "The story", kind: locale === "es" ? "Página" : "Page" },
@@ -41,17 +37,7 @@ export function SearchDialog({ locale, onClose }: { locale: Locale; onClose: () 
       ...experiences.map((item) => ({
         href: `/experiences/${item.slug}`,
         title: t(locale, item.title),
-        kind: item.type === "tour" ? (locale === "es" ? "Tour" : "Tour") : locale === "es" ? "Servicio" : "Service",
-      })),
-      ...packages.map((item) => ({
-        href: `/packages/${item.slug}`,
-        title: t(locale, item.title),
-        kind: locale === "es" ? "Paquete" : "Package",
-      })),
-      ...occasions.map((item) => ({
-        href: `/occasions/${item.slug}`,
-        title: t(locale, item.title),
-        kind: locale === "es" ? "Ocasión" : "Occasion",
+        kind: item.type === "tour" ? (locale === "es" ? "Tour" : "Tour") : locale === "es" ? "Idea" : "Idea",
       })),
       ...posts.map((item) => ({
         href: `/guide/${item.slug}`,
@@ -69,9 +55,13 @@ export function SearchDialog({ locale, onClose }: { locale: Locale; onClose: () 
   }, [locale, query]);
 
   return (
-    <dialog ref={dialogRef} className="w-full max-w-xl rounded-3xl bg-sand p-0 text-ink" onClick={(event) => {
-      if (event.target === dialogRef.current) onClose();
-    }}>
+    <dialog
+      ref={dialogRef}
+      className="w-full max-w-xl rounded-3xl bg-sand p-0 text-ink"
+      onClick={(event) => {
+        if (event.target === dialogRef.current) onClose();
+      }}
+    >
       <form method="dialog" className="border-b border-line p-4">
         <label htmlFor="site-search" className="sr-only">
           {locale === "es" ? "Buscar en el sitio" : "Search the site"}
@@ -81,7 +71,7 @@ export function SearchDialog({ locale, onClose }: { locale: Locale; onClose: () 
           ref={inputRef}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder={locale === "es" ? "Casa, pesca, chef, Jacó…" : "House, fishing, chef, Jacó…"}
+          placeholder={locale === "es" ? "Casa, playa, Jacó…" : "House, beach, Jacó…"}
           className="w-full bg-transparent font-display text-2xl outline-none placeholder:text-muted"
         />
       </form>

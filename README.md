@@ -1,27 +1,34 @@
-# Casa Jannat
+# Casa Jannat · Jaco Escape
 
-Direct-booking site for Casa Jannat in Jacó, Costa Rica. English lives at `/`. Spanish lives at `/es`.
+Marketing site for Casa Jannat in Jacó, Costa Rica. Bookings go to Airbnb for now; direct booking is planned. English at `/`, Spanish at `/es`.
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3001](http://localhost:3001) (or the port Next prints).
 
-## Before taking payment
+## Site settings
 
-Rates, the promo code, the cleaning fee, IVA, and the security deposit live in `src/lib/rates.ts`. Experience prices live on each option in `src/content/experiences.ts`. Package savings are calculated from those prices.
+Edit root [`constant.properties`](constant.properties), then restart `pnpm run dev` (or rebuild) so values load:
 
-Set these when you have them:
+| Key | Purpose |
+| --- | --- |
+| `site.url` | Canonical domain (`https://casajannatjaco.com`) |
+| `support.email` | Host email |
+| `airbnb.url` / `airbnb.id` | Live listing |
+| `show_website_dev_in_progress` | `true` / `false` — top “in development” bar |
+| `seenstay.embedUrl` | HTTPS SeenStay badge URL (empty hides the section; localhost is ignored in production) |
+| `support.whatsapp` | Digits only; empty → email the host |
+| `analytics.ga4` / `analytics.metaPixel` | Optional; only load after consent |
 
-- `NEXT_PUBLIC_SITE_URL` — the real domain
-- `NEXT_PUBLIC_CONTACT_EMAIL`
-- `NEXT_PUBLIC_WHATSAPP` — digits only, country code, no plus. Until this is set, messages open an email.
-- `NEXT_PUBLIC_PHONE_DISPLAY` and `NEXT_PUBLIC_PHONE_TEL`
-- `NEXT_PUBLIC_INSTAGRAM` and `NEXT_PUBLIC_FACEBOOK`
-- `NEXT_PUBLIC_GA4_ID` and `NEXT_PUBLIC_META_PIXEL_ID` — loaded only after the visitor allows analytics
+## Before launch
 
-Confirm the overnight maximum (the listing header says 8; the description has also said 6), check-in and checkout times, and have the policy pages reviewed before launch.
+- Confirm Airbnb URL, email, check-in/out, and policy pages
+- Set a production SeenStay embed URL when you have one (HTTPS)
+- Add WhatsApp / phone / social when live
+- Add GA4 / Meta Pixel IDs when ready
+- Run `pnpm run build` and smoke-test `/`, `/stays/casa-jannat`, `/es`, `/faq`, `/contact`
 
-A request on this site is not a charge. Dates are held when you confirm them and send payment. Connect a channel manager before promising a live blocked calendar, and Stripe before charging cards here.
+Experiences on this site are informational only — not bookable here.
