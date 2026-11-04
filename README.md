@@ -15,7 +15,7 @@ Edit root [`constant.properties`](constant.properties), then restart `pnpm run d
 
 | Key | Purpose |
 | --- | --- |
-| `site.url` | Canonical domain (`https://casajannatjaco.com`) |
+| `site.url` | Canonical domain (`https://jacoescape.com`) |
 | `support.email` | Host email |
 | `airbnb.url` / `airbnb.id` | Live listing |
 | `show_website_dev_in_progress` | `true` / `false` — top “in development” bar |

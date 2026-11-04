@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { experiences } from "@/content/experiences";
 import { policies } from "@/content/policies";
 import { posts } from "@/content/posts";
-import { site } from "@/lib/site";
+import { absoluteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -33,15 +33,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return entries.map(({ path, priority, changeFrequency }) => {
     const bare = path === "/" ? "" : path;
+    const en = absoluteUrl(path);
     return {
-      url: `${site.url}${path}`,
+      url: en,
       lastModified: now,
       changeFrequency,
       priority,
       alternates: {
         languages: {
-          en: `${site.url}${path === "/" ? "/" : path}`,
-          es: `${site.url}/es${bare}`,
+          en,
+          es: absoluteUrl(`/es${bare}`),
         },
       },
     };

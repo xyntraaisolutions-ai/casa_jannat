@@ -3,6 +3,13 @@ import { homeHero } from "@/content/villa";
 import type { Locale } from "./copy";
 import { site } from "./site";
 
+/** Absolute site URL for a path. Home is always self-canonical with a trailing slash. */
+export function absoluteUrl(path = "/"): string {
+  const base = site.url.replace(/\/$/, "");
+  if (!path || path === "/") return `${base}/`;
+  return `${base}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 export function buildMetadata({
   locale,
   path,
@@ -19,8 +26,8 @@ export function buildMetadata({
   image?: { url: string; width: number; height: number; alt: string };
 }): Metadata {
   const bare = path === "/" ? "" : path;
-  const en = `${site.url}${path === "/" ? "/" : path}`;
-  const es = `${site.url}/es${bare}`;
+  const en = absoluteUrl(path);
+  const es = absoluteUrl(`/es${bare}`);
   const canonical = locale === "es" ? es : en;
   const share = image ?? {
     url: homeHero.src,
@@ -31,6 +38,7 @@ export function buildMetadata({
   return {
     title: absolute ? { absolute: title } : title,
     description,
+    // Indexable — never noindex public marketing pages.
     robots: {
       index: true,
       follow: true,

@@ -32,7 +32,8 @@ export const site = {
     en: requireProp(p, "site.description.en"),
     es: requireProp(p, "site.description.es"),
   },
-  url: requireProp(p, "site.url"),
+  /** Canonical origin from constant.properties (no trailing slash). */
+  url: requireProp(p, "site.url").replace(/\/$/, ""),
   /** Show the top “website in development” bar when true. Prefer layout prop (fresh file read). */
   showWebsiteDevInProgress: optionalProp(p, "show_website_dev_in_progress", "false").toLowerCase() === "true",
   email: requireProp(p, "support.email"),
