@@ -24,7 +24,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           fetchPriority="high"
           sizes="100vw"
           quality={90}
-          className="object-cover object-[42%_center]"
+          className="object-cover object-center"
         />
         <div className="pointer-events-none absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-ocean-deep/70 via-ocean-deep/30 to-transparent md:w-[55%] md:from-ocean-deep/60 md:via-ocean-deep/25" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ocean-deep/45 to-transparent" />

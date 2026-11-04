@@ -19,9 +19,9 @@ export const homeHero = {
 };
 
 export const jacoView = {
-  src: "/images/casa-jannat/jaco-aerial.jpg",
-  width: 1024,
-  height: 712,
+  src: "/images/casa-jannat/hero.png",
+  width: 2172,
+  height: 724,
   alt: c(
     "Aerial view of Jacó’s sandy beach, turquoise surf, and the green headland",
     "Vista aérea de la playa de arena de Jacó, el oleaje turquesa y el cerro verde",
