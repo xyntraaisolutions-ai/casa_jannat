@@ -1,9 +1,10 @@
-import { site } from "@/lib/site";
+import { loadSeenStayUpstreamUrl, SEENSTAY_PROXY_PATH } from "@/lib/seenstayEmbed";
 import { Container, Eyebrow } from "./ui";
 
-/** SeenStay score — wide horizontal frame so the badge does not scroll. */
+/** SeenStay score — same-origin proxy so HTTPS production can frame the badge. */
 export function SeenStayEmbed({ locale }: { locale: "en" | "es" }) {
-  if (!site.seenstayEmbedUrl) return null;
+  const upstream = loadSeenStayUpstreamUrl();
+  if (!upstream) return null;
 
   return (
     <section
@@ -28,12 +29,12 @@ export function SeenStayEmbed({ locale }: { locale: "en" | "es" }) {
           </p>
         </div>
 
-          <div className="mt-8 w-full max-w-[44rem]">
+        <div className="mt-8 w-full max-w-[44rem]">
           <iframe
-            src={site.seenstayEmbedUrl}
+            src={SEENSTAY_PROXY_PATH}
             title={locale === "es" ? "Informe SeenStay de visibilidad en IA" : "SeenStay AI visibility report"}
             loading="lazy"
-            referrerPolicy="strict-origin-when-cross-origin"
+            referrerPolicy="no-referrer"
             className="block w-full border-0 bg-transparent"
             style={{ height: 480, minHeight: 480 }}
           />
