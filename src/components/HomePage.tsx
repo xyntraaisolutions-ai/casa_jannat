@@ -26,9 +26,9 @@ export function HomePage({ locale }: { locale: Locale }) {
           quality={90}
           className="object-cover object-center"
         />
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-ocean-deep/70 via-ocean-deep/30 to-transparent md:w-[55%] md:from-ocean-deep/60 md:via-ocean-deep/25" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-[78%] bg-gradient-to-r from-ocean-deep/80 via-ocean-deep/45 to-transparent md:w-[60%] md:from-ocean-deep/75 md:via-ocean-deep/35" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ocean-deep/45 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ocean-deep/50 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ocean-deep/55 to-transparent" />
         <Container className="relative mt-auto flex flex-col pb-10 pt-32 md:pb-20 md:pt-36">
           <Eyebrow light>{locale === "es" ? "Jacó, Costa Rica" : "Jacó, Costa Rica"}</Eyebrow>
           <h1 className="mt-2 max-w-xl font-display text-4xl leading-[0.92] drop-shadow-[0_2px_18px_rgb(8_38_44/0.45)] sm:text-5xl md:mt-3 md:text-7xl">
@@ -37,7 +37,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               {locale === "es" ? "un pedacito de paraíso" : "a little piece of paradise"}
             </span>
           </h1>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-sand/95 sm:text-base md:mt-4 md:text-lg">
+          <p className="mt-3 max-w-md rounded-2xl bg-ocean-deep/75 px-3.5 py-2.5 text-sm font-medium leading-relaxed text-sand backdrop-blur-sm sm:text-base md:mt-4 md:px-4 md:py-3 md:text-lg">
             {locale === "es"
               ? "Cuatro recámaras, piscina privada, y la playa a un corto paseo."
               : "Four bedrooms, a private pool, and the beach a short walk away."}
@@ -52,7 +52,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               {locale === "es" ? "Ver la casa" : "See the house"}
             </LocaleLink>
           </div>
-          <p className="mt-2.5 text-[0.7rem] text-sand/75 md:mt-3 md:text-xs">
+          <p className="mt-2.5 text-[0.7rem] font-medium text-sand/90 [text-shadow:0_1px_3px_rgb(8_38_44/0.7)] md:mt-3 md:text-xs">
             {locale === "es" ? "Reserva directa próximamente · Por ahora, Airbnb" : "Direct booking coming soon · Book on Airbnb for now"}
           </p>
         </Container>
