@@ -8,10 +8,10 @@ const constantProperties = parseProperties(
   readFileSync(join(process.cwd(), "constant.properties"), "utf8"),
 );
 
-/** SeenStay iframe snippet — `src/seenstay_embed.txt` is the source of truth for the badge URL. */
+/** SeenStay iframe snippet — root `seenstay_embed.txt` is the source of truth for the badge URL. */
 try {
   const embedSrc = parseSeenStayEmbedSrc(
-    readFileSync(join(process.cwd(), "src/seenstay_embed.txt"), "utf8"),
+    readFileSync(join(process.cwd(), "seenstay_embed.txt"), "utf8"),
   );
   if (embedSrc) constantProperties["seenstay.embedUrl"] = embedSrc;
 } catch {
