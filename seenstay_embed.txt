@@ -1,5 +1,5 @@
 <iframe
-  src="https://seenstay.ai/embed/v1/KVpM06L9nvAC558PCSPylSzFDcjA4Yii"
+  src="https://seenstay.ai/embed/v1/kyGn7AGFavqf1HrzV7R5QsUKZJOWZ9mu"
   title="SeenStay report"
   style={{ width: '100%', border: 0, minHeight: 280 }}
 />
